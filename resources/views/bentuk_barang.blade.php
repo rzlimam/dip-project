@@ -34,6 +34,7 @@
                                 <a href="# "class="btn btn-warning">Edit</a>
                                 <a href="# "class="btn btn-danger">Hapus</a>
                             </td>
+                        </tr>
                         <tr>
                             <td>2</td>
                             <td>Padat</td>

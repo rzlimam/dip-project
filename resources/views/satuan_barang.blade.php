@@ -16,9 +16,12 @@
             <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Table Satuan Barang</h4>
+                    <a href="#" class="btn btn-primary">+ Tambah Satuan</a>
                   </div>
                   <div class="card-body">
+                    <div class="card-title">
+                      <h4>Table Satuan Barang</h4>
+                    </div>
                     <div class="table">
                       <table class="table table-md">
                         <tr>
@@ -27,46 +30,18 @@
                           <th>Nama</th>
                           <th>Action</th>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>LTR</td>
-                            <td>Liter</td>
+                        @foreach ($satuan as $unit => $value)
+                          <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $value->kode_satuan }}</td>
+                            <td>{{ $value->nama_satuan }}</td>
                             <td>
                                 <a href="#" class="btn btn-success">Detail</a>
                                 <a href="# "class="btn btn-warning">Edit</a>
                                 <a href="# "class="btn btn-danger">Hapus</a>
                             </td>
-                        <tr>
-                            <td>2</td>
-                            <td>KG</td>
-                            <td>Kilogram</td>
-                            <td>
-                                <a href="#" class="btn btn-success">Detail</a>
-                                <a href="# "class="btn btn-warning">Edit</a>
-                                <a href="# "class="btn btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>PCS</td>
-                            <td>Pieces</td>
-                            <td>
-                                <a href="#" class="btn btn-success">Detail</a>
-                                <a href="# "class="btn btn-warning">Edit</a>
-                                <a href="# "class="btn btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>LBR</td>
-                            <td>Lembar</td>
-                            <td>
-                                <a href="#" class="btn btn-success">Detail</a>
-                                <a href="# "class="btn btn-warning">Edit</a>
-                                <a href="# "class="btn btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                        
+                          <tr>
+                        @endforeach
                       </table>
                     </div>
                   </div>

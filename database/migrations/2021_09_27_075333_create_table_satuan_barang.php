@@ -18,8 +18,8 @@ class CreateTableSatuanBarang extends Migration
             $table->string('kode_satuan')->unique();
             $table->string('nama_satuan');
             $table->boolean('isActive');
-            $table->string('deletedBy');
-            $table->timestamps('deletedAt');
+            $table->string('deletedBy')->nullable();
+            $table->timestamp('deletedAt')->nullable();
             $table->timestamps();
         });
     }

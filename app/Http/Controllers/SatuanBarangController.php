@@ -14,7 +14,11 @@ class SatuanBarangController extends Controller
      */
     public function index()
     {
-        //
+        //return 'Ini halaman satuan';
+        return view('satuan_barang', [
+            'satuan' => SatuanBarang::all()
+        ]);
+
     }
 
     /**

@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use App\Models\Role;
+use App\Models\SatuanBarang;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -48,11 +51,11 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function satuan_barang() {
+    public function satuanBarang() {
         return $this->hasMany(SatuanBarang::class);
     }
 
-    public function bentuk_barang() {
+    public function bentukBarang() {
         return $this->hasMany(BentukBarang::class);
     }
 }
