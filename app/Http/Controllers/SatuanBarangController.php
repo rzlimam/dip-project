@@ -15,7 +15,7 @@ class SatuanBarangController extends Controller
     public function index()
     {
         //return 'Ini halaman satuan';
-        return view('satuan_barang', [
+        return view('satuan_barang.index', [
             'satuan' => SatuanBarang::all()
         ]);
 
@@ -28,7 +28,7 @@ class SatuanBarangController extends Controller
      */
     public function create()
     {
-        //
+        return view('satuan_barang.create');
     }
 
     /**
@@ -39,7 +39,16 @@ class SatuanBarangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'kode_satuan' => 'required|max:5|unique:satuan_barang',
+            'nama_satuan' => 'required'
+        ]);
+
+        $validatedData['isActive'] = true;
+
+        SatuanBarang::create($validatedData);
+
+        return redirect('/satuan')->with('success', 'Satuan barang telah ditambahkan');
     }
 
     /**
@@ -84,6 +93,9 @@ class SatuanBarangController extends Controller
      */
     public function destroy(SatuanBarang $satuanBarang)
     {
-        //
+        //dd($satuanBarang);
+        SatuanBarang::destroy($satuanBarang);
+
+        return redirect('/satuan')->with('deleted', 'Satuan barang telah dihapus');
     }
 }
