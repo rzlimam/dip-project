@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BentukBarangController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\SatuanBarangController;
@@ -19,11 +20,10 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::resource('/satuan', SatuanBarangController::class);
-
-Route::get('/bentuk', function () {
-    return view('bentuk_barang');
-});
+Route::resources([
+    '/satuan' => SatuanBarangController::class,
+    '/bentuk' => BentukBarangController::class,
+]);
 
 Route::get('/barang', function () {
     return view('barang');
