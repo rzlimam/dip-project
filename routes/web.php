@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\SatuanBarangController;
+use App\Http\Controllers\SatuanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,6 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::resource('/satuan', SatuanBarangController::class);
-
 Route::get('/bentuk', function () {
     return view('bentuk_barang');
 });
@@ -28,3 +27,7 @@ Route::get('/bentuk', function () {
 Route::get('/barang', function () {
     return view('barang');
 });
+
+Route::get('/barang/{satuan}', [SatuanController::class, 'show']);
+
+Route::resource('/satuan', SatuanBarangController::class);

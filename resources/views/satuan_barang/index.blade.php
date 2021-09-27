@@ -55,12 +55,11 @@
                           <td>{{ $unit->kode_satuan }}</td>
                           <td>{{ $unit->nama_satuan }}</td>
                           <td>
-                              <a href="#" class="btn btn-success">Detail</a>
-                              <a href="#" class="btn btn-warning">Edit</a>
+                              <a href="/satuan/{{ $unit->id }}/edit" class="btn btn-warning">Edit</a>
                               <form action="/satuan/{{ $unit->id }}" method="POST" class="d-inline">
                                 @method('delete')
                                 @csrf
-                                <button class="btn btn-danger" onclick="return confirm('Are you sure?')">Hapus</button>
+                                <button class="btn btn-danger" onclick="return confirm('Are you sure?')"><span class="ion ion-trash-a" data-pack="default" data-tags="delete, remove, dump"></span> Hapus</button>
                               </form>
                           </td>
                         <tr>
