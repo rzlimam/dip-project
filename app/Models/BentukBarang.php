@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class BentukBarang extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
 }

@@ -15,9 +15,14 @@ class BentukBarangController extends Controller
    */
   public function index()
   {
-    return view('bentuk_barang', [
+    return view('bentuk_barang.index', [
       'bentuks' => BentukBarang::all()
     ]);
+  }
+
+  public function create()
+  {
+    return view('bentuk_barang.create');
   }
 
   /**
@@ -28,25 +33,17 @@ class BentukBarangController extends Controller
    */
   public function store(Request $request)
   {
-    $request->validate([
-      'kode' => 'required|unique:bentuk_barangs',
-      'nama' => 'required',
+    $validated_data = $request->validate([
+      'kode' => 'required|max:5|unique:bentuk_barangs',
+      'nama' => 'required'
     ]);
-    die();
 
-    $validated = $request->validated();
-    var_dump($validated);
+    $validated_data['kode'] = strtoupper($validated_data['kode']);
+    $validated_data['is_active'] = true;
 
-    $bentuk_barang = new BentukBarang();
+    BentukBarang::create($validated_data);
 
-    $bentuk_barang->nama = $validated_data['nama'];
-    $bentuk_barang->kode = $validated_data['kode'];
-
-    $bentuk_barang->save();
-
-    return redirect('/bentuk')
-      ->with('status', 'success')
-      ->with('message', 'Berhasil menambahkan bentuk barang.');
+    return redirect('/bentuk')->with('success', 'Berhasil menambahkan bentuk barang.');
   }
 
   /**
