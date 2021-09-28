@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Barang;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -36,24 +37,8 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
-        SatuanBarang::create([
-            'kode' => 'LTR',
-            'nama' => 'Liter',
-        ]);
-
-        SatuanBarang::create([
-            'kode' => 'KG',
-            'nama' => 'Kilogram',
-        ]);
-
-        SatuanBarang::create([
-            'kode' => 'PCS',
-            'nama' => 'Pieces',
-        ]);
-
-        SatuanBarang::create([
-            'kode' => 'LBR',
-            'nama' => 'Lembar',
-        ]);
+        $this->call(SatuanBarangSeeder::class);
+        $this->call(BentukBarangSeeder::class);
+        $this->call(BarangSeeder::class);
     }
 }

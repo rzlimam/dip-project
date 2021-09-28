@@ -11,4 +11,9 @@ class BentukBarang extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function barangs()
+    {
+        return $this->hasMany(Barang::class);
+    }
 }

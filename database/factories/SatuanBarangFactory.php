@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\BentukBarang;
+use App\Models\SatuanBarang;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class BentukBarangFactory extends Factory
+class SatuanBarangFactory extends Factory
 {
   /**
    * The name of the factory's corresponding model.
    *
    * @var string
    */
-  protected $model = BentukBarang::class;
+  protected $model = SatuanBarang::class;
 
   /**
    * Define the model's default state.
@@ -23,7 +23,7 @@ class BentukBarangFactory extends Factory
   {
     return [
       'kode' => $this->faker->lexify('???'),
-      'nama' => $this->faker->word(),
+      'nama' => $this->faker->sentence(2),
     ];
   }
 }
