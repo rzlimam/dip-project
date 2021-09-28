@@ -24,11 +24,9 @@ Route::get('/', function () {
 Route::resources([
     '/satuan' => SatuanBarangController::class,
     '/bentuk' => BentukBarangController::class,
+    '/user', UserController::class
 ]);
 
 Route::get('/barang', function () {
     return view('barang');
 });
-
-Route::resource('/satuan', SatuanBarangController::class);
-Route::resource('/user', UserController::class);
