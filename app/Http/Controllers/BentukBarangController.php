@@ -57,6 +57,11 @@ class BentukBarangController extends Controller
     return redirect('/bentuk');
   }
 
+  public function edit(BentukBarang $bentuk)
+  {
+    return view('bentuk_barang.edit', ['bentuk' => $bentuk]);
+  }
+
   /**
    * Update the specified resource in storage.
    *
@@ -64,16 +69,26 @@ class BentukBarangController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(Request $request, BentukBarang $bentuk)
   {
-    BentukBarang::where('id', $id)->update([
-      'kode' => $request->input('kode'),
-      'nama' => $request->input('nama'),
-    ]);
+    $rules = [
+      'nama' => ['required'],
+    ];
+
+    if ($request->kode != $bentuk->kode) {
+      $rules['kode'] = ['required', 'max:3', 'unique:bentuk_barangs'];
+    }
+
+    $validated = $request->validate($rules);
+
+    foreach ($validated as $k => $v) {
+      $bentuk->$k = $v;
+    }
+
+    $bentuk->save();
 
     return redirect('/bentuk')
-      ->with('status', 'success')
-      ->with('message', 'Bentuk barang berhasil diperbarui.');
+      ->with('success', 'Bentuk barang berhasil diperbarui.');
   }
 
   /**

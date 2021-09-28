@@ -62,9 +62,11 @@
                 <td>{{ $bentuk->kode }}</td>
                 <td>{{ $bentuk->nama }}</td>
                 <td>
-                  <a href="/bentuk/edit" class="btn btn-warning">Edit</a>
+                  <a href="/bentuk/{{$bentuk->id}}/edit" class="btn btn-warning">
+                    Edit
+                  </a>
 
-                  <form action="/bentuk/{{$bentuk->id}}" method="post" id="form-hapus-bentuk-barang">
+                  <form action="/bentuk/{{$bentuk->id}}" method="post" class="d-inline">
                     @csrf
                     @method('delete')
                     <input type="submit" class="btn btn-danger" value="Hapus">

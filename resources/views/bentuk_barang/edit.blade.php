@@ -22,12 +22,13 @@
 
         <div class="card-body">
           <div class="col-md-6">
-            <form action="/bentuk" method="POST">
+            <form action="/bentuk/{{$bentuk->id}}" method="POST">
               @csrf
+              @method('put')
               <div class="form-group">
                 <label>Kode</label>
 
-                <input type="text" class="form-control @error('kode') is-invalid @enderror" id="kode" name="kode" value="{{ old('kode') }}" placeholder="Kode bentuk barang...">
+                <input type="text" class="form-control @error('kode') is-invalid @enderror" id="kode" name="kode" value="{{ old('kode', $bentuk->kode) }}" placeholder="Kode bentuk barang...">
                 @error('kode')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -38,7 +39,7 @@
               <div class="form-group">
                 <label>Nama</label>
 
-                <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama bentuk barang...">
+                <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama', $bentuk->nama) }}" placeholder="Nama bentuk barang...">
                 @error('nama')
                 <div class="invalid-feedback">
                   {{ $message }}
