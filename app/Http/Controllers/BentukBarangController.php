@@ -32,10 +32,9 @@ class BentukBarangController extends Controller
       'kode' => 'required|unique:bentuk_barangs',
       'nama' => 'required',
     ]);
-    die();
 
     $validated = $request->validated();
-    var_dump($validated);
+    //var_dump($validated);
 
     $bentuk_barang = new BentukBarang();
 

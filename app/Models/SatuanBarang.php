@@ -11,7 +11,6 @@ class SatuanBarang extends Model
 {
     use HasFactory;
 
-    protected $table = "satuan_barang";
     protected $guarded = ['id'];
 
     public function user() {

@@ -25,8 +25,8 @@
                                 @csrf
                                 <div class="form-group">
                                     <label>Kode Satuan</label>
-                                    <input type="text" class="form-control @error('kode_satuan') is-invalid @enderror" id="kode_satuan" name="kode_satuan" autofocus value="{{ old('kode_satuan', $satuan->kode_satuan) }}">
-                                    @error('kode_satuan')
+                                    <input type="text" class="form-control @error('kode') is-invalid @enderror" id="kode" name="kode" autofocus value="{{ old('kode', $satuan->kode) }}">
+                                    @error('kode')
                                         <div class="invalid-feedback">
                                         {{ $message }}
                                         </div>   
@@ -34,8 +34,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Nama Satuan</label>
-                                    <input type="text" class="form-control @error('nama_satuan') is-invalid @enderror" id="nama_satuan" name="nama_satuan" autofocus value="{{ old('nama_satuan', $satuan->nama_satuan) }}">
-                                    @error('nama_satuan')
+                                    <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" autofocus value="{{ old('nama', $satuan->nama) }}">
+                                    @error('nama')
                                         <div class="invalid-feedback">
                                         {{ $message }}
                                         </div>   

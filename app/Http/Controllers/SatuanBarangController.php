@@ -16,7 +16,7 @@ class SatuanBarangController extends Controller
     {
         //dd(SatuanBarang::all());
         return view('satuan_barang.index', [
-            'satuan' => SatuanBarang::where('isActive', 1)->get()
+            'satuan' => SatuanBarang::all()
         ]);
 
     }
@@ -40,12 +40,11 @@ class SatuanBarangController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'kode_satuan' => 'required|max:5|unique:satuan_barang',
-            'nama_satuan' => 'required'
+            'kode' => 'required|max:5|unique:satuan_barangs',
+            'nama' => 'required'
         ]);
 
-        $validatedData['kode_satuan'] = strtoupper($validatedData['kode_satuan']);
-        $validatedData['isActive'] = true;
+        $validatedData['kode'] = strtoupper($validatedData['kode']);
 
         SatuanBarang::create($validatedData);
 
@@ -86,17 +85,16 @@ class SatuanBarangController extends Controller
     public function update(Request $request, SatuanBarang $satuan)
     {
         $rules = [
-            'nama_satuan' => 'required'
+            'nama' => 'required'
         ];
 
-        if($request->kode_satuan != $satuan->kode_satuan) {
-            $rules['kode_satuan'] = 'required|max:5|unique:satuan_barang';
+        if($request->kode != $satuan->kode) {
+            $rules['kode'] = 'required|max:5|unique:satuan_barangs';
         }
 
         $validatedData = $request->validate($rules);
 
-        $validatedData['kode_satuan'] = strtoupper($request->kode_satuan);
-        $validatedData['isActive'] = true;
+        $validatedData['kode'] = strtoupper($request->kode);
 
         SatuanBarang::where('id', $satuan->id)
             ->update($validatedData);
@@ -113,12 +111,7 @@ class SatuanBarangController extends Controller
      */
     public function destroy(SatuanBarang $satuan)
     {   
-        //SatuanBarang::destroy($satuan->id);
-        $data = SatuanBarang::find($satuan->id);
-
-        $data['isActive'] = false;
-
-        $data->save();
+        SatuanBarang::destroy($satuan->id);
 
         return redirect('/satuan')->with('deleted', 'Satuan barang telah dihapus');
     }

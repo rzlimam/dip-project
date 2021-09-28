@@ -4,6 +4,7 @@ use App\Http\Controllers\BentukBarangController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\SatuanBarangController;
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -22,11 +23,8 @@ Route::get('/', function () {
 });
 
 Route::resources([
+    '/barang' => BarangController::class,
     '/satuan' => SatuanBarangController::class,
     '/bentuk' => BentukBarangController::class,
-    '/user', UserController::class
+    '/user' => UserController::class
 ]);
-
-Route::get('/barang', function () {
-    return view('barang');
-});

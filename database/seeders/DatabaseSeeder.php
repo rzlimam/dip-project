@@ -37,27 +37,23 @@ class DatabaseSeeder extends Seeder
         ]);
 
         SatuanBarang::create([
-            'kode_satuan' => 'LTR',
-            'nama_satuan' => 'Liter',
-            'isActive' => true,
+            'kode' => 'LTR',
+            'nama' => 'Liter',
         ]);
 
         SatuanBarang::create([
-            'kode_satuan' => 'KG',
-            'nama_satuan' => 'Kilogram',
-            'isActive' => true,
+            'kode' => 'KG',
+            'nama' => 'Kilogram',
         ]);
 
         SatuanBarang::create([
-            'kode_satuan' => 'PCS',
-            'nama_satuan' => 'Pieces',
-            'isActive' => true,
+            'kode' => 'PCS',
+            'nama' => 'Pieces',
         ]);
 
         SatuanBarang::create([
-            'kode_satuan' => 'LBR',
-            'nama_satuan' => 'Lembar',
-            'isActive' => true,
+            'kode' => 'LBR',
+            'nama' => 'Lembar',
         ]);
     }
 }
