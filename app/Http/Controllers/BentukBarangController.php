@@ -15,9 +15,14 @@ class BentukBarangController extends Controller
    */
   public function index()
   {
-    return view('bentuk_barang', [
-      'bentuks' => BentukBarang::all()
+    return view('bentuk_barang.index', [
+      'bentuks' => BentukBarang::where('is_active', true)->get()
     ]);
+  }
+
+  public function create()
+  {
+    return view('bentuk_barang.create');
   }
 
   /**
@@ -28,24 +33,20 @@ class BentukBarangController extends Controller
    */
   public function store(Request $request)
   {
-    $request->validate([
-      'kode' => 'required|unique:bentuk_barangs',
-      'nama' => 'required',
+    $validated_data = $request->validate([
+      'kode' => 'required|max:5|unique:bentuk_barangs',
+      'nama' => 'required'
     ]);
 
     $validated = $request->validated();
     //var_dump($validated);
 
-    $bentuk_barang = new BentukBarang();
+    $validated_data['kode'] = strtoupper($validated_data['kode']);
+    $validated_data['is_active'] = true;
 
-    $bentuk_barang->nama = $validated_data['nama'];
-    $bentuk_barang->kode = $validated_data['kode'];
+    BentukBarang::create($validated_data);
 
-    $bentuk_barang->save();
-
-    return redirect('/bentuk')
-      ->with('status', 'success')
-      ->with('message', 'Berhasil menambahkan bentuk barang.');
+    return redirect('/bentuk')->with('success', 'Berhasil menambahkan bentuk barang.');
   }
 
   /**
@@ -59,6 +60,11 @@ class BentukBarangController extends Controller
     return redirect('/bentuk');
   }
 
+  public function edit(BentukBarang $bentuk)
+  {
+    return view('bentuk_barang.edit', ['bentuk' => $bentuk]);
+  }
+
   /**
    * Update the specified resource in storage.
    *
@@ -66,16 +72,26 @@ class BentukBarangController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(Request $request, BentukBarang $bentuk)
   {
-    BentukBarang::where('id', $id)->update([
-      'kode' => $request->input('kode'),
-      'nama' => $request->input('nama'),
-    ]);
+    $rules = [
+      'nama' => ['required'],
+    ];
+
+    if ($request->kode != $bentuk->kode) {
+      $rules['kode'] = ['required', 'max:3', 'unique:bentuk_barangs'];
+    }
+
+    $validated = $request->validate($rules);
+
+    foreach ($validated as $k => $v) {
+      $bentuk->$k = $v;
+    }
+
+    $bentuk->save();
 
     return redirect('/bentuk')
-      ->with('status', 'success')
-      ->with('message', 'Bentuk barang berhasil diperbarui.');
+      ->with('success', 'Bentuk barang berhasil diperbarui.');
   }
 
   /**
@@ -84,12 +100,13 @@ class BentukBarangController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy(BentukBarang $bentuk)
   {
-    BentukBarang::destroy($id);
+    $bentuk->is_active = false;
+
+    $bentuk->save();
 
     return redirect('/bentuk')
-      ->with('status', 'success')
-      ->with('message', 'Berhasil menghapus bentuk barang.');
+      ->with('success', 'Berhasil menghapus bentuk barang.');
   }
 }

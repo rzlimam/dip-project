@@ -17,6 +17,7 @@ class CreateBentukBarangsTable extends Migration
       $table->id();
       $table->string('kode')->unique();
       $table->string('nama');
+      $table->boolean('is_active')->default(true);
       $table->timestamps();
     });
   }
