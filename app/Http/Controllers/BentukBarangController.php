@@ -16,7 +16,7 @@ class BentukBarangController extends Controller
   public function index()
   {
     return view('bentuk_barang.index', [
-      'bentuks' => BentukBarang::all()
+      'bentuks' => BentukBarang::where('is_active', true)->get()
     ]);
   }
 
@@ -97,12 +97,13 @@ class BentukBarangController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy(BentukBarang $bentuk)
   {
-    BentukBarang::destroy($id);
+    $bentuk->is_active = false;
+
+    $bentuk->save();
 
     return redirect('/bentuk')
-      ->with('status', 'success')
-      ->with('message', 'Berhasil menghapus bentuk barang.');
+      ->with('success', 'Berhasil menghapus bentuk barang.');
   }
 }

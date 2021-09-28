@@ -69,7 +69,7 @@
                   <form action="/bentuk/{{$bentuk->id}}" method="post" class="d-inline">
                     @csrf
                     @method('delete')
-                    <input type="submit" class="btn btn-danger" value="Hapus">
+                    <input type="submit" class="btn btn-danger" value="Hapus" onclick="return confirm('Anda yakin ingin menghapus {{$bentuk->nama}} dari daftar bentuk barang?')">
                   </form>
                 </td>
               </tr>
