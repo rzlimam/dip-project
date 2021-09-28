@@ -33,18 +33,14 @@ class BentukBarangController extends Controller
    */
   public function store(Request $request)
   {
-    $validated_data = $request->validate([
+    $validated = $request->validate([
       'kode' => 'required|max:5|unique:bentuk_barangs',
       'nama' => 'required'
     ]);
 
-    $validated = $request->validated();
-    //var_dump($validated);
+    $validated['kode'] = strtoupper($validated['kode']);
 
-    $validated_data['kode'] = strtoupper($validated_data['kode']);
-    $validated_data['is_active'] = true;
-
-    BentukBarang::create($validated_data);
+    BentukBarang::create($validated);
 
     return redirect('/bentuk')->with('success', 'Berhasil menambahkan bentuk barang.');
   }
