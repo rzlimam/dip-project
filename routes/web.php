@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\SatuanBarangController;
-use App\Http\Controllers\SatuanController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +28,5 @@ Route::get('/barang', function () {
     return view('barang');
 });
 
-Route::get('/barang/{satuan}', [SatuanController::class, 'show']);
-
 Route::resource('/satuan', SatuanBarangController::class);
+Route::resource('/user', UserController::class);

@@ -35,33 +35,35 @@
               @endif
               <div class="card">
                 <div class="card-header">
-                  <a href="/satuan/create" class="btn btn-primary">+ Tambah Satuan</a>
+                  <a href="/satuan/create" class="btn btn-primary">+ Tambah Akun</a>
                 </div>
                 <div class="card-body">
                   <div class="card-title">
                     <h4>Table Satuan Barang</h4>
                   </div>
-                  <div class="table-responsive">
-                    <table class="table table-bordered table-md">
+                  <div class="table">
+                    <table class="table table-md">
                       <tr>
                         <th>#</th>
-                        <th>Kode Satuan</th>
                         <th>Nama</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
                         <th>Action</th>
                       </tr>
-                      @foreach ($satuan as $unit)
+                      @foreach ($user as $akun)
                         <tr>
                           <td>{{ $loop->iteration }}</td>
-                          <td>{{ $unit->kode_satuan }}</td>
-                          <td>{{ $unit->nama_satuan }}</td>
+                          <td>{{ $akun->name }}</td>
+                          <td>{{ $akun->username }}</td>
+                          <td>{{ $akun->email }}</td>
+                          <td>{{ $akun->role->name }}</td>
                           <td>
-                              <a href="/satuan/{{ $unit->id }}/edit" class="btn btn-warning">
-                                <span class="ion ion-edit" data-pack="default" data-tags="delete, remove, dump"></span> Edit
-                              </a>
-                              <form action="/satuan/{{ $unit->id }}" method="POST" class="d-inline">
+                              <a href="/satuan/{{ $akun->id }}/edit" class="btn btn-warning">Edit</a>
+                              <form action="/satuan/{{ $akun->id }}" method="POST" class="d-inline">
                                 @method('delete')
                                 @csrf
-                                <button class="btn btn-danger" onclick="return confirm('Are you sure?')"><span class="ion ion-trash-b" data-pack="default" data-tags="delete, remove, dump"></span> Hapus</button>
+                                <button class="btn btn-danger" onclick="return confirm('Are you sure?')"><span class="ion ion-trash-a" data-pack="default" data-tags="delete, remove, dump"></span> Hapus</button>
                               </form>
                           </td>
                         <tr>

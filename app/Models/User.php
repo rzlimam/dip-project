@@ -47,15 +47,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles() {
+    public function role() {
         return $this->belongsTo(Role::class);
     }
 
-    public function satuanBarang() {
+    public function satuanbarang() {
         return $this->hasMany(SatuanBarang::class);
-    }
-
-    public function bentukBarang() {
-        return $this->hasMany(BentukBarang::class);
     }
 }
