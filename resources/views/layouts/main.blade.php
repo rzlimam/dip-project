@@ -13,11 +13,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
+<<<<<<< HEAD
+  <!-- CSS Libraries -->
+  <link rel="stylesheet" href="/node_modules/jqvmap/dist/jqvmap.min.css">
+  <link rel="stylesheet" href="/node_modules/weathericons/css/weather-icons.min.css">
+  <link rel="stylesheet" href="/node_modules/weathericons/css/weather-icons-wind.min.css">
+  <link rel="stylesheet" href="/node_modules/summernote/dist/summernote-bs4.css">
+  <link rel="stylesheet" href="../node_modules/ionicons201/css/ionicons.min.css">
+=======
     <!-- CSS Libraries -->
     {{-- <link rel="stylesheet" href="../node_modules/jqvmap/dist/jqvmap.min.css">
   <link rel="stylesheet" href="../node_modules/weathericons/css/weather-icons.min.css">
   <link rel="stylesheet" href="../node_modules/weathericons/css/weather-icons-wind.min.css">
   <link rel="stylesheet" href="../node_modules/summernote/dist/summernote-bs4.css"> --}}
+>>>>>>> 0a261d9ec2260cea91815fab6fa735e3761fa047
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="/css/style.css">
@@ -46,12 +55,12 @@
     <script src="/js/stisla.js"></script>
 
     <!-- JS Libraies -->
-    {{-- <script src="../node_modules/simpleweather/jquery.simpleWeather.min.js"></script>
-    <script src="../node_modules/chart.js/dist/Chart.min.js"></script>
-    <script src="../node_modules/jqvmap/dist/jquery.vmap.min.js"></script>
-    <script src="../node_modules/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-    <script src="../node_modules/summernote/dist/summernote-bs4.js"></script>
-    <script src="../node_modules/chocolat/dist/js/jquery.chocolat.min.js"></script> --}}
+    <script src="/node_modules/simpleweather/jquery.simpleWeather.min.js"></script>
+    <script src="/node_modules/chart.js/dist/Chart.min.js"></script>
+    <script src="/node_modules/jqvmap/dist/jquery.vmap.min.js"></script>
+    <script src="/node_modules/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="/node_modules/summernote/dist/summernote-bs4.js"></script>
+    <script src="/node_modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
 
     <!-- Template JS File -->
     <script src="/js/scripts.js"></script>
