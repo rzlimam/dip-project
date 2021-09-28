@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\BentukBarang;
+use App\Models\SatuanBarang;
 use Illuminate\Http\Request;
 
 class BarangController extends Controller
@@ -26,7 +28,10 @@ class BarangController extends Controller
    */
   public function create()
   {
-    //
+    return view('barang.create', [
+      'bentuks' => BentukBarang::all('id', 'nama'),
+      'satuans' => SatuanBarang::all('id', 'nama'),
+    ]);
   }
 
   /**
@@ -37,7 +42,19 @@ class BarangController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    $validated = $request->validate([
+      'kode' => 'required|max:5|unique:barangs',
+      'name' => 'required',
+      'bentukbarang_id' => 'required',
+      'satuanbarang_id' => 'required',
+    ]);
+
+    $validated['kode'] = strtoupper($validated['kode']);
+    $validated['isActive'] = true;
+
+    Barang::create($validated);
+
+    return redirect('/barang')->with('success', 'Berhasil menambahkan barang barang.');
   }
 
   /**
@@ -59,7 +76,7 @@ class BarangController extends Controller
    */
   public function edit(Barang $barang)
   {
-    //
+    return view('barang.edit', ['barang' => $barang]);
   }
 
   /**

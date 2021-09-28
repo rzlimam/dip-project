@@ -70,6 +70,7 @@
                   <a href="/barang/{{ $barang->id }}/edit" class="btn btn-warning">
                     <span class="ion ion-edit" data-pack="default" data-tags="delete, remove, dump"></span> Edit
                   </a>
+
                   <form action="/barang/{{ $barang->id }}" method="POST" class="d-inline">
                     @method('delete')
                     @csrf
@@ -131,5 +132,4 @@
     </div>
   </div>
 </div>
-
 @endsection
