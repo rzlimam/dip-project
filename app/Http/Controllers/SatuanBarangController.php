@@ -14,11 +14,9 @@ class SatuanBarangController extends Controller
      */
     public function index()
     {
-        //dd(SatuanBarang::all());
         return view('satuan_barang.index', [
             'satuan' => SatuanBarang::all()
         ]);
-
     }
 
     /**
@@ -88,7 +86,7 @@ class SatuanBarangController extends Controller
             'nama' => 'required'
         ];
 
-        if($request->kode != $satuan->kode) {
+        if ($request->kode != $satuan->kode) {
             $rules['kode'] = 'required|max:5|unique:satuan_barangs';
         }
 
@@ -100,7 +98,6 @@ class SatuanBarangController extends Controller
             ->update($validatedData);
 
         return redirect('/satuan')->with('success', 'Satuan barang berhasil diedit');
-
     }
 
     /**
@@ -110,7 +107,7 @@ class SatuanBarangController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(SatuanBarang $satuan)
-    {   
+    {
         SatuanBarang::destroy($satuan->id);
 
         return redirect('/satuan')->with('deleted', 'Satuan barang telah dihapus');

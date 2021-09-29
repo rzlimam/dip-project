@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Barang;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -35,27 +36,27 @@ class DatabaseSeeder extends Seeder
             'role_id' => 1,
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin'),
-            'remember_token' => Str::random(10),
+            'remember_token' => Str::random(10)
         ]);
 
         SatuanBarang::create([
             'kode' => 'LTR',
-            'nama' => 'Liter',
+            'nama' => 'Liter'
         ]);
 
         SatuanBarang::create([
             'kode' => 'KG',
-            'nama' => 'Kilogram',
+            'nama' => 'Kilogram'
         ]);
 
         SatuanBarang::create([
             'kode' => 'PCS',
-            'nama' => 'Pieces',
+            'nama' => 'Pieces'
         ]);
 
         SatuanBarang::create([
             'kode' => 'LBR',
-            'nama' => 'Lembar',
+            'nama' => 'Lembar'
         ]);
 
         KategoriThirdParty::create([

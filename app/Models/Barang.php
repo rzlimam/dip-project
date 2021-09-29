@@ -5,20 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Http\Controllers\SatuanBarang;
-use App\Http\Controllers\BentukBarang;
+use App\Models\SatuanBarang;
+use App\Models\BentukBarang;
 
 class Barang extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $fillable = ['kode', 'name', 'satuanbarang_id', 'bentukbarang_id', 'isActive'];
 
-    public function satuanbarang(){
-        return $this->hasMany(SatuanBarang::class);
+    public function satuanbarang()
+    {
+        return $this->belongsTo(SatuanBarang::class);
     }
 
-    public function bentukbarang(){
-        return $this->hasMany(BentukBarang::class);
+    public function bentukbarang()
+    {
+        return $this->belongsTo(BentukBarang::class);
     }
 }

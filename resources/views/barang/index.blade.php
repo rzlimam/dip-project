@@ -60,29 +60,30 @@
                 <th>Action</th>
               </tr>
               @foreach ($barangs as $barang)
-                <tr>
-                  <td>{{ $loop->iteration }}</td>
-                  <td>{{ $barang->kode }}</td>
-                  <td>{{ $barang->nama }}</td>
-                  <td>{{ $barang->bentukbarang->nama }}</td>
-                  <td>{{ $barang->satuanbarang->nama }}</td>
-                  <td>
-                      <a href="/barang/{{ $barang->id }}/edit" class="btn btn-warning">
-                        <span class="ion ion-edit" data-pack="default" data-tags="delete, remove, dump"></span> Edit
-                      </a>
-                      <form action="/barang/{{ $barang->id }}" method="POST" class="d-inline">
-                        @method('delete')
-                        @csrf
-                        <button class="btn btn-danger" onclick="return confirm('Are you sure?')"><span class="ion ion-trash-b" data-pack="default" data-tags="delete, remove, dump"></span> Hapus</button>
-                      </form>
-                  </td>
-                <tr>
-              @endforeach
+              <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $barang->kode }}</td>
+                <td>{{ $barang->name }}</td>
+                <td>{{ $barang->bentukbarang->nama }}</td>
+                <td>{{ $barang->satuanbarang->nama }}</td>
+                <td>
+                  <a href="/barang/{{ $barang->id }}/edit" class="btn btn-warning">
+                    <span class="ion ion-edit" data-pack="default" data-tags="delete, remove, dump"></span> Edit
+                  </a>
+
+                  <form action="/barang/{{ $barang->id }}" method="POST" class="d-inline">
+                    @method('delete')
+                    @csrf
+                    <button class="btn btn-danger" onclick="return confirm('Are you sure?')"><span class="ion ion-trash-b" data-pack="default" data-tags="delete, remove, dump"></span> Hapus</button>
+                  </form>
+                </td>
+              <tr>
+                @endforeach
             </table>
           </div>
           <div class="card-footer text-right">
             <nav class="d-inline-block">
-              
+
             </nav>
           </div>
         </div>
@@ -131,5 +132,4 @@
     </div>
   </div>
 </div>
-
 @endsection

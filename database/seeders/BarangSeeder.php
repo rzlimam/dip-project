@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\BentukBarang;
 use App\Models\Barang;
+use App\Models\BentukBarang;
+use App\Models\SatuanBarang;
 use Illuminate\Database\Seeder;
 
-class BentukBarangSeeder extends Seeder
+class BarangSeeder extends Seeder
 {
   /**
    * Run the database seeds.
@@ -15,7 +16,9 @@ class BentukBarangSeeder extends Seeder
    */
   public function run()
   {
-    BentukBarang::factory(2)
+    Barang::factory(5)
+      // ->for(BentukBarang::factory())
+      // ->for(SatuanBarang::factory())
       ->create();
   }
 }
