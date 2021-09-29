@@ -20,9 +20,13 @@
               <li><a class="nav-link" href="/satuan">Satuan Barang</a></li>
             </ul>
           </li>
-          <li class="menu-header"></li>
+          <li class="menu-header">Third Party</li>
           <li class="nav-item">
-            <a href="/user" class="nav-link"><i class="fas fa-user"></i> <span>Akun</span></a>
+            <a href="/supplier" class="nav-link"><i class="fas fa-address-book"></i> <span>Supplier</span></a>
+          </li>
+          <li class="menu-header">Manajemen Akun</li>
+          <li class="nav-item">
+            <a href="/user" class="nav-link"><i class="fas fa-users"></i> <span>Akun</span></a>
           </li>
           
     </aside>

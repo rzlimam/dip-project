@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 use App\Models\Role;
 use App\Models\SatuanBarang;
 use App\Models\User;
+use App\Models\KategoriThirdParty;
+use App\Models\ThirdParty;
 
 class DatabaseSeeder extends Seeder
 {
@@ -54,6 +56,24 @@ class DatabaseSeeder extends Seeder
         SatuanBarang::create([
             'kode' => 'LBR',
             'nama' => 'Lembar',
+        ]);
+
+        KategoriThirdParty::create([
+            'name' => 'Supplier'
+        ]);
+
+        KategoriThirdParty::create([
+            'name' => 'Customer'
+        ]);
+
+        ThirdParty::create([
+            'name' => 'PT. ABC',
+            'kategori_tp_id' => 1
+        ]);
+
+        ThirdParty::create([
+            'name' => 'PT. BCD',
+            'kategori_tp_id' => 2
         ]);
     }
 }
