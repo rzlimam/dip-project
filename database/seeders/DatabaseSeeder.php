@@ -76,5 +76,9 @@ class DatabaseSeeder extends Seeder
             'name' => 'PT. BCD',
             'kategori_tp_id' => 2
         ]);
+
+        $this->call(SatuanBarangSeeder::class);
+        $this->call(BentukBarangSeeder::class);
+        $this->call(BarangSeeder::class);
     }
 }
