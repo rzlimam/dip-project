@@ -17,7 +17,8 @@ class BarangController extends Controller
   public function index()
   {
     return view('barang.index', [
-      'barangs' => Barang::all()
+      // 'barangs' => Barang::all()
+      'barangs' => Barang::where('isActive', true)->get()
     ]);
   }
 
@@ -122,6 +123,11 @@ class BarangController extends Controller
    */
   public function destroy(Barang $barang)
   {
-    //
+    $barang->isActive = false;
+
+    $barang->save();
+
+    return redirect('/barang')
+      ->with('success', 'Berhasil menghapus barang.');
   }
 }
