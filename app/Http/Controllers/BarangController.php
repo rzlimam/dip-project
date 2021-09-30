@@ -65,7 +65,7 @@ class BarangController extends Controller
    */
   public function show(Barang $barang)
   {
-    //
+    return redirect('/barang');
   }
 
   /**
@@ -76,7 +76,11 @@ class BarangController extends Controller
    */
   public function edit(Barang $barang)
   {
-    return view('barang.edit', ['barang' => $barang]);
+    return view('barang.edit', [
+      'barang' => $barang,
+      'bentuks' => BentukBarang::all('id', 'nama'),
+      'satuans' => SatuanBarang::all('id', 'nama'),
+    ]);
   }
 
   /**
@@ -88,7 +92,26 @@ class BarangController extends Controller
    */
   public function update(Request $request, Barang $barang)
   {
-    //
+    $rules = [
+      'name' => 'required',
+      'bentukbarang_id' => 'required',
+      'satuanbarang_id' => 'required',
+    ];
+
+    if ($barang->kode != $request->kode) {
+      $rules['kode'] = 'required|max:5|unique:barangs';
+    }
+
+    $validated = $request->validate($rules);
+
+    foreach ($validated as $k => $v) {
+      $barang->$k = $v;
+    }
+
+    $barang->save();
+
+    return redirect('/barang')
+      ->with('success', 'Barang berhasil diperbarui.');
   }
 
   /**
