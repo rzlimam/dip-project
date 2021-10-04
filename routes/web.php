@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SatuanBarangController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -28,5 +29,6 @@ Route::resources([
     '/satuan' => SatuanBarangController::class,
     '/bentuk' => BentukBarangController::class,
     '/supplier' => SupplierController::class,
+    '/customer' => CustomerController::class,
     '/user' => UserController::class
 ]);
