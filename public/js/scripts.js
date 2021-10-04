@@ -374,11 +374,12 @@ $(function() {
     $(".summernote-simple").summernote({
        dialogsInBody: true,
       minHeight: 150,
-      toolbar: [
-        ['style', ['bold', 'italic', 'underline', 'clear']],
-        ['font', ['strikethrough']],
-        ['para', ['paragraph']]
-      ]
+      // toolbar: [
+      //   ['style', ['bold', 'italic', 'underline', 'clear']],
+      //   ['font', ['strikethrough']],
+      //   ['para', ['paragraph']]
+      // ]
+      toolbar:[]
     });
   }
 

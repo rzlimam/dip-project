@@ -40,7 +40,7 @@
           {{-- <button class="btn btn-primary" data-toggle="modal" id="tombol-tambah-satuan-barang" data-target="#modal-form-satuan-barang">
             <i class="fas fa-plus"></i> Satuan Barang
           </button> --}}
-          <a href="#" class="btn btn-primary">
+          <a href="/supplier/create" class="btn btn-primary">
             <i class="fas fa-plus"></i> Tambah Supplier
           </a>
         </div>
@@ -63,10 +63,13 @@
                   <td>{{ $supplier->name }}</td>
                   <td>{{ $supplier->kategorithirdparty->name }}</td>
                   <td>
-                      <a href="/satuan/{{ $supplier->id }}/edit" class="btn btn-warning">
+                      <a href="/supplier/{{ $supplier->id }}" class="btn btn-warning">
+                        <span class="ion ion-eye" data-pack="default" data-tags="delete, remove, dump"></span> Detail
+                      </a>
+                      <a href="/supplier/{{ $supplier->id }}/edit" class="btn btn-warning">
                         <span class="ion ion-edit" data-pack="default" data-tags="delete, remove, dump"></span> Edit
                       </a>
-                      <form action="/satuan/{{ $supplier->id }}" method="POST" class="d-inline">
+                      <form action="/supplier/{{ $supplier->id }}" method="POST" class="d-inline">
                         @method('delete')
                         @csrf
                         <button class="btn btn-danger" onclick="return confirm('Are you sure?')"><span class="ion ion-trash-b" data-pack="default" data-tags="delete, remove, dump"></span> Hapus</button>

@@ -16,7 +16,7 @@ class CreateAlamatThirdPartiesTable extends Migration
         Schema::create('alamat_third_parties', function (Blueprint $table) {
             $table->id();
             $table->string('alamat');
-            $table->foreignId('thirdparty_id');
+            $table->foreignId('third_party_id');
             $table->timestamps();
         });
     }

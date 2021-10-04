@@ -16,7 +16,7 @@ class CreatePhoneThirdPartiesTable extends Migration
         Schema::create('phone_third_parties', function (Blueprint $table) {
             $table->id();
             $table->string('phone');
-            $table->foreignId('thirdparty_id');
+            $table->foreignId('third_party_id');
             $table->timestamps();
         });
     }

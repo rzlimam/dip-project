@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/node_modules/weathericons/css/weather-icons-wind.min.css">
     <link rel="stylesheet" href="/node_modules/summernote/dist/summernote-bs4.css">
     <link rel="stylesheet" href="/node_modules/ionicons201/css/ionicons.min.css">
+    <link rel="stylesheet" href="/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="/css/style.css">
@@ -53,6 +54,9 @@
     <script src="/node_modules/jqvmap/dist/maps/jquery.vmap.world.js"></script>
     <script src="/node_modules/summernote/dist/summernote-bs4.js"></script>
     <script src="/node_modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
+    <script src="/node_modules/cleave.js/dist/cleave.min.js"></script>
+    <script src="/node_modules/cleave.js/dist/addons/cleave-phone.us.js"></script>
+    <script src="/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
 
     <!-- Template JS File -->
     <script src="/js/scripts.js"></script>
@@ -61,6 +65,7 @@
     <!-- Page Specific JS File -->
     <script src="/js/page/index-0.js"></script>
     <script src="/js/page/bootstrap-modal.js"></script>
+    <script src="/js/page/forms-advanced-forms.js"></script>
 </body>
 
 </html>
