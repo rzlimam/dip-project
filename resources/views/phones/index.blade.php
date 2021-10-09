@@ -3,7 +3,7 @@
 @section('container')
 <section class="section">
   <div class="section-header">
-    <h1>Supplier</h1>
+    <h1>Nomor Telepon {{$third_party->name}}</h1>
     <div class="section-header-breadcrumb">
       <div class="breadcrumb-item active"><a href="/">Dashboard</a></div>
       <div class="breadcrumb-item"><a href="#">Barang</a></div>
@@ -37,11 +37,8 @@
 
       <div class="card">
         <div class="card-header">
-          {{-- <button class="btn btn-primary" data-toggle="modal" id="tombol-tambah-satuan-barang" data-target="#modal-form-satuan-barang">
-            <i class="fas fa-plus"></i> Satuan Barang
-          </button> --}}
-          <a href="/supplier/create" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Tambah Supplier
+          <a href="phones/create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Tambah Nomor Telepon
           </a>
         </div>
 
@@ -53,28 +50,19 @@
             <table class="table table-bordered table-md">
               <tr>
                 <th>#</th>
-                <th>Nama</th>
-                <th>Kategori</th>
+                <th>Nomor</th>
                 <th>Action</th>
               </tr>
-              @foreach ($suppliers as $supplier)
+              @foreach ($third_party->phones as $phone)
               <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $supplier->name }}</td>
-                <td>{{ $supplier->kategori->name }}</td>
+                <td>{{ $phone->phone }}</td>
                 <td>
-                  <a href="/supplier/{{ $supplier->id }}/contact" class="btn btn-warning">
-                    Kontak
+                  <a href="/phones/{{ $phone->id }}/edit" class="btn btn-warning">
+                    <span class="ion ion-edit"></span> Edit
                   </a>
 
-                  <a href="/supplier/{{ $supplier->id }}" class="btn btn-warning">
-                    <span class="ion ion-eye" data-pack="default" data-tags="delete, remove, dump"></span> Detail
-                  </a>
-
-                  <a href="/supplier/{{ $supplier->id }}/edit" class="btn btn-warning">
-                    <span class="ion ion-edit" data-pack="default" data-tags="delete, remove, dump"></span> Edit
-                  </a>
-                  <form action="/supplier/{{ $supplier->id }}" method="POST" class="d-inline">
+                  <form action="/phones/{{ $phone->id }}" method="POST" class="d-inline">
                     @method('delete')
                     @csrf
                     <button class="btn btn-danger" onclick="return confirm('Are you sure?')"><span class="ion ion-trash-b" data-pack="default" data-tags="delete, remove, dump"></span> Hapus</button>

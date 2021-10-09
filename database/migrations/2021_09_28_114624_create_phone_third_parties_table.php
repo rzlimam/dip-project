@@ -6,28 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatePhoneThirdPartiesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('phone_third_parties', function (Blueprint $table) {
-            $table->id();
-            $table->string('phone');
-            $table->foreignId('third_party_id');
-            $table->timestamps();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('phone_third_parties', function (Blueprint $table) {
+      $table->id();
+      $table->string('phone');
+      $table->foreignId('third_party_id');
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('phone_third_parties');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('phone_third_parties');
+  }
 }

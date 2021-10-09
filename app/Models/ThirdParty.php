@@ -12,33 +12,40 @@ use App\Models\AlamatThirdParty;
 
 class ThirdParty extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $guarded = ['id'];
+  protected $guarded = ['id'];
 
-    public function kategorithirdparty() {
-        return $this->belongsTo(KategoriThirdParty::class, 'kategori_tp_id');
-    }
+  public function kategori()
+  {
+    return $this->belongsTo(KategoriThirdParty::class, 'kategori_tp_id');
+  }
 
-    public function phonethirdparty(){
-        return $this->hasMany(PhoneThirdParty::class);
-    }
-    public function emailthirdparty(){
-        return $this->hasMany(EmailThirdParty::class);
-    }
-    public function alamatthirdparty(){
-        return $this->hasMany(AlamatThirdParty::class);
-    }
+  public function phones()
+  {
+    return $this->hasMany(PhoneThirdParty::class, 'third_party_id');
+  }
 
-    // this is a recommended way to declare event handlers
-    public static function boot() {
-        parent::boot();
+  public function emails()
+  {
+    return $this->hasMany(EmailThirdParty::class, 'third_party_id');
+  }
 
-        static::deleting(function($thirdparty) { // before delete() method call this
-             $thirdparty->phonethirdparty()->delete();
-             $thirdparty->emailthirdparty()->delete();
-             $thirdparty->alamatthirdparty()->delete();
-             // do the rest of the cleanup...
-        });
-    }
+  public function alamats()
+  {
+    return $this->hasMany(AlamatThirdParty::class, 'third_party_id');
+  }
+
+  // this is a recommended way to declare event handlers
+  public static function boot()
+  {
+    parent::boot();
+
+    static::deleting(function ($thirdparty) { // before delete() method call this
+      $thirdparty->phones()->delete();
+      $thirdparty->emails()->delete();
+      $thirdparty->alamats()->delete();
+      // do the rest of the cleanup...
+    });
+  }
 }

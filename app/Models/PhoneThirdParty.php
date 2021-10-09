@@ -13,7 +13,8 @@ class PhoneThirdParty extends Model
 
     protected $guarded = ['id'];
 
-    public function thirdparty(){
-        return $this->belongTo(ThirdParty::class);
+    public function third_party()
+    {
+        return $this->belongsTo(ThirdParty::class);
     }
 }

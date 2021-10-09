@@ -1,12 +1,15 @@
 <?php
 
-use App\Http\Controllers\BentukBarangController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\BentukBarangController;
 use App\Http\Controllers\SatuanBarangController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\AlamatController;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\PhoneController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -21,14 +24,20 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('home');
+  return view('home');
 });
 
 Route::resources([
-    '/barang' => BarangController::class,
-    '/satuan' => SatuanBarangController::class,
-    '/bentuk' => BentukBarangController::class,
-    '/supplier' => SupplierController::class,
-    '/customer' => CustomerController::class,
-    '/user' => UserController::class
+  '/barang' => BarangController::class,
+  '/satuan' => SatuanBarangController::class,
+  '/bentuk' => BentukBarangController::class,
+  '/supplier' => SupplierController::class,
+  '/customer' => CustomerController::class,
+  '/user' => UserController::class,
+  '/phones' => PhoneController::class,
 ]);
+
+Route::get('supplier/{supplier}/contact', [SupplierController::class, 'contact']);
+Route::resource('supplier.phones', PhoneController::class)->parameter('supplier', 'third_party')->only(['index', 'create', 'store']);
+Route::resource('supplier.emails', EmailController::class)->parameter('supplier', 'third_party')->only(['index', 'create', 'store']);
+Route::resource('supplier.alamats', AlamatController::class)->parameter('supplier', 'third_party')->only(['index', 'create', 'store']);
