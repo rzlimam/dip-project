@@ -74,8 +74,6 @@ class PhoneController extends Controller
    */
   public function edit(PhoneThirdParty $phone)
   {
-    $third_party = ThirdParty::find($phone->third_party_id);
-
     return view('phones.edit', ['phone' => $phone]);
   }
 
@@ -83,7 +81,7 @@ class PhoneController extends Controller
    * Update the specified resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
+   * @param  PhoneThirdParty $phone
    * @return \Illuminate\Http\Response
    */
   public function update(Request $request, PhoneThirdParty $phone)

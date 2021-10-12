@@ -108,15 +108,15 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $email->email }}</td>
                     <td>
-                      <a href="/email/{{ $email->id }}/edit" class="btn btn-warning">
-                        <span class="ion ion-edit"></span> Edit
+                      <a href="/emails/{{ $email->id }}/edit" class="btn btn-warning">
+                        Edit
                       </a>
 
-                      <form action="/email/{{ $email->id }}" method="POST" class="d-inline">
+                      <form action="/emails/{{ $email->id }}" method="POST" class="d-inline">
                         @method('delete')
                         @csrf
                         <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
-                          <span class="ion ion-trash-b"></span> Hapus
+                          Hapus
                         </button>
                       </form>
                     </td>
