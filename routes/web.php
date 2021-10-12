@@ -36,6 +36,7 @@ Route::resources([
   '/user' => UserController::class,
   '/phones' => PhoneController::class,
   '/emails' => EmailController::class,
+  '/alamats' => AlamatController::class,
 ]);
 
 Route::get('supplier/{supplier}/contact', [SupplierController::class, 'contact']);

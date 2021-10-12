@@ -146,20 +146,21 @@
                     <th>Nomor</th>
                     <th>Action</th>
                   </tr>
+
                   @foreach ($supplier->alamats as $alamat)
                   <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $alamat->alamat }}</td>
                     <td>
-                      <a href="/alamat/{{ $alamat->id }}/edit" class="btn btn-warning">
-                        <span class="ion ion-edit"></span> Edit
+                      <a href="/alamats/{{ $alamat->id }}/edit" class="btn btn-warning">
+                        Edit
                       </a>
 
-                      <form action="/alamat/{{ $alamat->id }}" method="POST" class="d-inline">
+                      <form action="/alamats/{{ $alamat->id }}" method="POST" class="d-inline">
                         @method('delete')
                         @csrf
                         <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
-                          <span class="ion ion-trash-b"></span> Hapus
+                          Hapus
                         </button>
                       </form>
                     </td>
@@ -174,5 +175,4 @@
     </div>
   </div>
 </div>
-
 @endsection
