@@ -29,7 +29,7 @@
                 <label>Alamat</label>
 
                 <div class="input-group">
-                  <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat">{{ old('alamat', $alamat->alamat) }}</textarea>
+                  <textarea class="summernote-simple @error('alamat') is-invalid @enderror" id="alamat" name="alamat">{{ old('alamat', $alamat->alamat) }}</textarea>
                 </div>
 
                 @error('alamat')

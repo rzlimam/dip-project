@@ -7,7 +7,6 @@ use App\Models\PhoneThirdParty;
 use App\Models\EmailThirdParty;
 use App\Models\AlamatThirdParty;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class SupplierController extends Controller
 {
