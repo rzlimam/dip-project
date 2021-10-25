@@ -29,9 +29,10 @@ class BarangController extends Controller
    */
   public function create()
   {
+    //dd(SatuanBarang::all());
     return view('barang.create', [
-      'bentuks' => BentukBarang::all('id', 'nama'),
-      'satuans' => SatuanBarang::all('id', 'nama'),
+      'bentuks' => BentukBarang::where('is_active', 1)->get(),
+      'satuans' => SatuanBarang::all(),
     ]);
   }
 

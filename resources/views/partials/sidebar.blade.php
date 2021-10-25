@@ -11,7 +11,7 @@
           <li class="nav-item active">
             <a href="/" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
           </li>
-          <li class="menu-header"></li>
+          <li class="menu-header">Barang</li>
           <li class="nav-item dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Barang</span></a>
             <ul class="dropdown-menu">
@@ -21,6 +21,9 @@
             </ul>
           </li>
           <li class="menu-header">Third Party</li>
+          <li class="nav-item">
+            <a href="/customer" class="nav-link"><i class="fas fa-address-book"></i> <span>Customer</span></a>
+          </li>
           <li class="nav-item">
             <a href="/supplier" class="nav-link"><i class="fas fa-address-book"></i> <span>Supplier</span></a>
           </li>

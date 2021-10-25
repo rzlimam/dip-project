@@ -43,3 +43,8 @@ Route::get('supplier/{supplier}/contact', [SupplierController::class, 'contact']
 Route::resource('supplier.phones', PhoneController::class)->parameter('supplier', 'third_party')->only(['index', 'create', 'store']);
 Route::resource('supplier.emails', EmailController::class)->parameter('supplier', 'third_party')->only(['index', 'create', 'store']);
 Route::resource('supplier.alamats', AlamatController::class)->parameter('supplier', 'third_party')->only(['index', 'create', 'store']);
+
+Route::get('customer/{customer}/contact', [CustomerController::class, 'contact']);
+Route::resource('customer.phones', PhoneController::class)->parameter('customer', 'third_party')->only(['index', 'create', 'store']);
+Route::resource('customer.emails', EmailController::class)->parameter('customer', 'third_party')->only(['index', 'create', 'store']);
+Route::resource('customer.alamats', AlamatController::class)->parameter('customer', 'third_party')->only(['index', 'create', 'store']);

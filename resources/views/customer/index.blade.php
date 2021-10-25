@@ -44,6 +44,7 @@
           </a>
         </div>
 
+       
         <div class="card-body">
           <div class="card-title">
             <h4>Table Customer</h4>
@@ -57,30 +58,35 @@
                 <th>Action</th>
               </tr>
               @foreach ($customers as $customer)
-                <tr>
-                  <td>{{ $loop->iteration }}</td>
-                  <td>{{ $customer->name }}</td>
-                  <td>{{ $customer->kategorithirdparty->name }}</td>
-                  <td>
-                      <a href="/customer/{{ $customer->id }}" class="btn btn-warning">
-                        <span class="ion ion-eye" data-pack="default" data-tags="delete, remove, dump"></span> Detail
-                      </a>
-                      <a href="/customer/{{ $customer->id }}/edit" class="btn btn-warning">
-                        <span class="ion ion-edit" data-pack="default" data-tags="delete, remove, dump"></span> Edit
-                      </a>
-                      <form action="/customer/{{ $customer->id }}" method="POST" class="d-inline">
-                        @method('delete')
-                        @csrf
-                        <button class="btn btn-danger" onclick="return confirm('Are you sure?')"><span class="ion ion-trash-b" data-pack="default" data-tags="delete, remove, dump"></span> Hapus</button>
-                      </form>
-                  </td>
-                <tr>
-              @endforeach
+              <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $customer->name }}</td>
+                <td>{{ $customer->kategori->name }}</td>
+                <td>
+                  <a href="/customer/{{ $customer->id }}/contact" class="btn btn-warning">
+                    Kontak
+                  </a>
+
+                  <a href="/customer/{{ $customer->id }}" class="btn btn-warning">
+                    <span class="ion ion-eye" data-pack="default" data-tags="delete, remove, dump"></span> Detail
+                  </a>
+
+                  <a href="/customer/{{ $customer->id }}/edit" class="btn btn-warning">
+                    <span class="ion ion-edit" data-pack="default" data-tags="delete, remove, dump"></span> Edit
+                  </a>
+                  <form action="/customer/{{ $customer->id }}" method="POST" class="d-inline">
+                    @method('delete')
+                    @csrf
+                    <button class="btn btn-danger" onclick="return confirm('Are you sure?')"><span class="ion ion-trash-b" data-pack="default" data-tags="delete, remove, dump"></span> Hapus</button>
+                  </form>
+                </td>
+              <tr>
+                @endforeach
             </table>
           </div>
           <div class="card-footer text-right">
             <nav class="d-inline-block">
-              
+
             </nav>
           </div>
         </div>

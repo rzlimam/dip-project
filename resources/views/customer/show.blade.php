@@ -19,24 +19,29 @@
                     </div>
                     <div class="card-body">
                         <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Phone</label>
-                                    @if (!$customer->phonethirdparty->isEmpty())
-                                        <h5>{{ $customer->phonethirdparty->first()->phone }}</h5>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    @if (!$customer->emailthirdparty->isEmpty())
-                                        <h5>{{ $customer->emailthirdparty->first()->email }}</h5>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label>Alamat</label>
-                                    @if (!$customer->alamatthirdparty->isEmpty())
-                                        <h5>{{ $customer->alamatthirdparty->first()->alamat }}</h5>
-                                    @endif
-                                </div>
+                          <div class="form-group">
+                            <label>Phone</label>
+              
+                            @if (!$customer->phones->isEmpty())
+                            <h5>{{ $customer->phones->first()->phone }}</h5>
+                            @endif
+                          </div>
+              
+                          <div class="form-group">
+                            <label>Email</label>
+              
+                            @if (!$customer->emails->isEmpty())
+                            <h5>{{ $customer->emails->first()->email }}</h5>
+                            @endif
+                          </div>
+              
+                          <div class="form-group">
+                            <label>Alamat</label>
+              
+                            @if (!$customer->alamats->isEmpty())
+                            <h5>{{ $customer->alamats->first()->alamat }}</h5>
+                            @endif
+                          </div>
                         </div>
                     </div>
                 </div>

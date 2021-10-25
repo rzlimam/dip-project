@@ -50,7 +50,17 @@
               <div class="form-group">
                 <label>Bentuk</label>
 
-                <input list="bentukbarang_ids" class="form-control @error('bentukbarang_id') is-invalid @enderror" id="bentukbarang_id" name="bentukbarang_id" value="{{ old('bentukbarang_id') }}" placeholder="-- Pilih bentuk barang --">
+                <select class="form-control select2" name="satuan_id">
+                  @foreach ($bentuks as $bentuk)
+                    @if (old('satuan_id') == $bentuk->id)
+                      <option value="{{ $bentuk->id }}" selected>{{ $bentuk->nama }}</option>      
+                    @else
+                      <option value="{{ $bentuk->id }}">{{ $bentuk->nama }}</option>  
+                    @endif
+                  @endforeach
+                </select>
+
+                {{-- <input list="bentukbarang_ids" class="form-control @error('bentukbarang_id') is-invalid @enderror" id="bentukbarang_id" name="bentukbarang_id" value="{{ old('bentukbarang_id') }}" placeholder="-- Pilih bentuk barang --">
 
                 <datalist id="bentukbarang_ids">
                   @foreach($bentuks as $bentuk)
@@ -62,25 +72,35 @@
                 <div class="invalid-feedback">
                   {{ $message }}
                 </div>
-                @enderror
+                @enderror --}}
               </div>
 
               <div class="form-group">
                 <label>Satuan</label>
 
-                <input list="satuanbarang_ids" class="form-control @error('satuanbarang_id') is-invalid @enderror" id="satuanbarang_id" name="satuanbarang_id" value="{{ old('satuanbarang_id') }}" placeholder="-- Pilih satuan barang --">
+                <select class="form-control select2" name="satuan_id">
+                  @foreach ($satuans as $satuan)
+                    @if (old('satuan_id') == $satuan->id)
+                      <option value="{{ $satuan->id }}" selected>{{ $satuan->nama }}</option>      
+                    @else
+                      <option value="{{ $satuan->id }}">{{ $satuan->nama }}</option>  
+                    @endif
+                  @endforeach
+                </select>
+
+                {{-- <input list="satuanbarang_ids" class="form-control @error('satuanbarang_id') is-invalid @enderror" id="satuanbarang_id" name="satuanbarang_id" value="{{ old('satuanbarang_id') }}" placeholder="-- Pilih satuan barang --">
 
                 <datalist id="satuanbarang_ids">
                   @foreach($satuans as $satuan)
                   <option value="{{$satuan->id}}">{{$satuan->nama}}</option>
                   @endforeach
-                </datalist>
+                </datalist> --}}
 
-                @error('satuanbarang_id')
+                {{-- @error('satuanbarang_id')
                 <div class="invalid-feedback">
                   {{ $message }}
                 </div>
-                @enderror
+                @enderror --}}
               </div>
 
               <button type="submit" class="btn btn-primary">Simpan</button>

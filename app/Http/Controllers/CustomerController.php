@@ -73,6 +73,13 @@ class CustomerController extends Controller
         return redirect('/customer')->with('success', 'Customer berhasil ditambahkan');
     }
 
+    public function contact(ThirdParty $customer)
+    {
+        return view('customer.contact', [
+            'customer' => $customer
+        ]);
+    }
+
     /**
      * Display the specified resource.
      *

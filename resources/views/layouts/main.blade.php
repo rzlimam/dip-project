@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="/node_modules/summernote/dist/summernote-bs4.css">
     <link rel="stylesheet" href="/node_modules/ionicons201/css/ionicons.min.css">
     <link rel="stylesheet" href="/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="/node_modules/select2/dist/css/select2.min.css">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="/css/style.css">
@@ -57,6 +58,7 @@
     <script src="/node_modules/cleave.js/dist/cleave.min.js"></script>
     <script src="/node_modules/cleave.js/dist/addons/cleave-phone.us.js"></script>
     <script src="/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="/node_modules/select2/dist/js/select2.full.min.js"></script>
 
     <!-- Template JS File -->
     <script src="/js/scripts.js"></script>
