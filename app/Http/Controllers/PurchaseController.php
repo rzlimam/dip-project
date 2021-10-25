@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Purchase;
+use App\Models\ThirdParty;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -14,6 +15,8 @@ class PurchaseController extends Controller
    */
   public function index()
   {
+    // dd(Purchase::all());
+
     return view('purchase.index', ['purchases' => Purchase::all()]);
   }
 
@@ -24,7 +27,7 @@ class PurchaseController extends Controller
    */
   public function create()
   {
-    //
+    return view('purchase.create', ['third_parties' => ThirdParty::where('kategori_tp_id', 1)->get()]);
   }
 
   /**

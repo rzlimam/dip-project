@@ -15,8 +15,8 @@ class CreatePurchasesTable extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tp_id', 'thirdparty_id');
-            $table->string('date', 25);
+            $table->foreignId('third_party_id');
+            $table->dateTime('date');
             $table->string('faktur')->unique();
             $table->unsignedBigInteger('total_price');
             $table->foreignId('created_by', 'user_id');

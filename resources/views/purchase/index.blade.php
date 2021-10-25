@@ -68,8 +68,12 @@
                 <td>{{ $purchase->total_price }}</td>
                 <td>{{ $purchase->date }}</td>
                 <td>
+                  <a href="/purchase/{{ $purchase->id }}/detail" class="btn btn-warning">
+                    Detail
+                  </a>
+
                   <a href="/purchase/{{ $purchase->id }}/edit" class="btn btn-warning">
-                    <span class="ion ion-edit" data-pack="default" data-tags="delete, remove, dump"></span> Edit
+                    Edit
                   </a>
 
                   <form action="/purchase/{{ $purchase->id }}" method="POST" class="d-inline">

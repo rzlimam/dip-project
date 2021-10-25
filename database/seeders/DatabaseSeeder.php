@@ -11,6 +11,7 @@ use App\Models\Role;
 use App\Models\SatuanBarang;
 use App\Models\User;
 use App\Models\KategoriThirdParty;
+use App\Models\Purchase;
 use App\Models\ThirdParty;
 
 class DatabaseSeeder extends Seeder
@@ -60,5 +61,13 @@ class DatabaseSeeder extends Seeder
         $this->call(SatuanBarangSeeder::class);
         $this->call(BentukBarangSeeder::class);
         $this->call(BarangSeeder::class);
+
+        Purchase::create([
+            'third_party_id' => 1,
+            'date' => now(),
+            'faktur' => '123',
+            'total_price' => 1000000,
+            'created_by' => 1
+        ]);
     }
 }
