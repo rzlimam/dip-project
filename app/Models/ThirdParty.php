@@ -36,6 +36,11 @@ class ThirdParty extends Model
     return $this->hasMany(AlamatThirdParty::class, 'third_party_id');
   }
 
+  public function purchases()
+  {
+    return $this->hasMany(Purchase::class, 'third_party_id');
+  }
+
   // this is a recommended way to declare event handlers
   public static function boot()
   {

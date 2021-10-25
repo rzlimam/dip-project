@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\PhoneController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -37,6 +38,7 @@ Route::resources([
   '/phones' => PhoneController::class,
   '/emails' => EmailController::class,
   '/alamats' => AlamatController::class,
+  '/purchase' => PurchaseController::class,
 ]);
 
 Route::get('supplier/{supplier}/contact', [SupplierController::class, 'contact']);
