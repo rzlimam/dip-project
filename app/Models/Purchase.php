@@ -9,6 +9,8 @@ class Purchase extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function third_party()
     {
         return $this->belongsTo(ThirdParty::class);

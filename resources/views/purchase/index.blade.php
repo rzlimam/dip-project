@@ -66,7 +66,7 @@
                 <td>{{ $purchase->faktur }}</td>
                 <td>{{ $purchase->third_party->name }}</td>
                 <td>{{ $purchase->total_price }}</td>
-                <td>{{ $purchase->date }}</td>
+                <td>{{ date('d-M-Y', strtotime($purchase->date)) }}</td>
                 <td>
                   <a href="/purchase/{{ $purchase->id }}/detail" class="btn btn-warning">
                     Detail

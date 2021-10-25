@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Purchase;
 use App\Models\ThirdParty;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PurchaseController extends Controller
 {
@@ -38,7 +39,18 @@ class PurchaseController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    $validated = $request->validate([
+      'faktur' => 'required|max:255|unique:purchases',
+      'third_party_id' => 'required',
+      'date' => 'required',
+    ]);
+
+    $validated['total_price'] = 0;
+    $validated['created_by'] = 1;
+
+    Purchase::create($validated);
+
+    return redirect('/purchase')->with('success', 'Berhasil menambahkan purchasing.');
   }
 
   /**

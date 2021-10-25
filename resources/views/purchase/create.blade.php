@@ -61,7 +61,7 @@
               <div class="form-group">
                 <label>Tanggal</label>
 
-                <input type="datetime-local" class="form-control @error('date') is-invalid @enderror" id="date" name="date" value="{{ old('date') }}">
+                <input type="date" class="form-control @error('date') is-invalid @enderror" id="date" name="date" value="{{ old('date') }}">
                 @error('date')
                 <div class="invalid-feedback">
                   {{ $message }}
