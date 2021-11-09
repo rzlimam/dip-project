@@ -32,6 +32,9 @@
         <a href="/purchase" class="nav-link">
           <i class="fas fa-dollar-sign"></i> <span>Pembelian</span>
         </a>
+        <a href="/sale" class="nav-link">
+          <i class="fas fa-dollar-sign"></i> <span>Penjualan</span>
+        </a>
       </li>
       <li class="menu-header">Manajemen Akun</li>
       <li class="nav-item">
