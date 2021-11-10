@@ -40,18 +40,31 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'faktur' => 'required|max:255|unique:sales',
-            'third_party_id' => 'required',
-            'date' => 'required',
-          ]);
+        $barangs = $request->barangs;
+        $purchase = $request->purchase;
+        // $validated = $request->validate([
+        //     'faktur' => 'required|max:255|unique:sales',
+        //     'third_party_id' => 'required',
+        //     'date' => 'required',
+        //   ]);
       
-          $validated['total_price'] = 0;
-          $validated['created_by'] = 1;
+        //   $validated['total_price'] = 0;
+        //   $validated['created_by'] = 1;
+        // foreach($barangs as $barang){
+        //     SaleDetail::create($barang);
+        // }
+        $data = new Sale();
+        $data->faktur = $purchase['faktur'];
+        $data->third_party = ThirdParty::where('id', 2);
+        $data->date = $purchase['date'];
+        $data->save();
+        //Sale::create($data);
       
-          Sale::create($validated);
-      
-          return redirect('/sale')->with('success', 'Berhasil menambahkan data penjualan.');
+          //return redirect('/sale')->with('success', 'Berhasil menambahkan data penjualan.');
+        return response()->json([
+            'success'=>'Berhasil menambahkan data penjualan.',
+            'data' => $data
+        ]);
     }
 
     /**

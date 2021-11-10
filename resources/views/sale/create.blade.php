@@ -21,7 +21,7 @@
 
         <div class="card-body">
           <div class="col-md-6">
-            <form action="/sale" method="POST">
+            <form action="/sale" method="POST" id="sale-form">
               @csrf
               <div class="form-group">
                 <label>Faktur</label>
@@ -38,7 +38,7 @@
               <div class="form-group">
                 <label>Customer</label>
 
-                <select class="form-control select2" name="third_party_id">
+                <select class="form-control select2" name="third_party_id" id="customer_id">
                   <option value="" disabled selected>
                     -- Pilih Customer --
                   </option>
@@ -282,6 +282,33 @@
 
     $('#purchase-detail-form-modal').modal('hide');
   }
+
+  $("#sale-form").submit(function(event){
+    event.preventDefault();
+
+    $.ajax({
+        // headers: {
+        // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        // }
+        type: "POST",
+        url: "{{ route('sale.store') }}",
+        data: {
+        _token: $("input[name=_token]").val(),
+        purchase: {
+          faktur: $("#faktur").val(),
+          third_party_id: $("#customer_id").val(),
+          date: $("#date").val()
+        },
+        barangs: barangs
+        }, 
+        success: function(data)
+        {
+            alert(data.success); // show response from the php script.
+            console.log(data.data)
+        }
+    });
+
+  });
 </script>
 
 @endsection
