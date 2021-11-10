@@ -68,7 +68,7 @@
                 <td>{{ $sale->total_price }}</td>
                 <td>{{ date('d-M-Y', strtotime($sale->date)) }}</td>
                 <td>
-                  <a href="/sale/{{ $sale->id }}/detail" class="btn btn-warning">
+                  <a href="/sale/{{ $sale->id }}" class="btn btn-warning">
                     Detail
                   </a>
 

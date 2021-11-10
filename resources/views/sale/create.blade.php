@@ -239,6 +239,7 @@
       nama: $("#id-barang option:selected").text(),
       qty: $("#kuantitas-barang").val(),
       price_unit: $("#harga-satuan-barang").val(),
+      price_total: $("#harga-total-pembelian").val()
     };
 
     barangs.push(barang);
@@ -249,7 +250,7 @@
         <td>${barang.nama}</td>
         <td>${barang.qty}</td>
         <td>${barang.price_unit}</td>
-        <td>${barang.qty*barang.price_unit}</td>
+        <td>${barang.price_total}</td>
         <td>
           <button class="btn btn-warning edit-btn" data-id="${barang._id}">
             Edit

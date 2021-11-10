@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use App\Models\ThirdParty;
 use App\Models\Barang;
+use App\Models\SaleDetail;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -50,20 +51,31 @@ class SaleController extends Controller
       
         //   $validated['total_price'] = 0;
         //   $validated['created_by'] = 1;
-        // foreach($barangs as $barang){
-        //     SaleDetail::create($barang);
-        // }
-        $data = new Sale();
-        $data->faktur = $purchase['faktur'];
-        $data->third_party = ThirdParty::where('id', 2);
-        $data->date = $purchase['date'];
-        $data->save();
-        //Sale::create($data);
+        //$data = new Sale();
+        $data['faktur'] = $purchase['faktur'];
+        $data['third_party_id'] = $purchase['third_party_id'];
+        $data['date'] = $purchase['date'];
+        $data['total_price'] = 0;
+        $data['created_by'] = 1;
+        //$sale = $data->save();
+        $sale = Sale::create($data);
+        $sale_id = $sale->id;
+
+        foreach($barangs as $barang){
+            //$detail = new SaleDetail();
+            $detail['sale_id'] = $sale_id;
+            $detail['barang_id'] = $barang['id'];
+            $detail['qty'] = $barang['qty'];
+            $detail['price_unit'] = $barang['price_unit'];
+            $detail['price_total'] = $barang['price_total'];
+            //$detail->save();
+            SaleDetail::create($detail);
+        }
       
           //return redirect('/sale')->with('success', 'Berhasil menambahkan data penjualan.');
         return response()->json([
             'success'=>'Berhasil menambahkan data penjualan.',
-            'data' => $data
+            'data' => $sale
         ]);
     }
 
@@ -75,7 +87,14 @@ class SaleController extends Controller
      */
     public function show(Sale $sale)
     {
-        //
+        dd([
+            $sale,
+            SaleDetail::where('sale_id', $sale->id)->get()
+        ]);
+        return view('sale.show', [
+            'sale' => $sale,
+            'detail' => SaleDetail::where('sale_id', $sale->id)->get()
+        ]);
     }
 
     /**
