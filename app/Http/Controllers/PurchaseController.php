@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
 use App\Models\Purchase;
 use App\Models\ThirdParty;
 use Illuminate\Http\Request;
@@ -28,7 +29,10 @@ class PurchaseController extends Controller
    */
   public function create()
   {
-    return view('purchase.create', ['third_parties' => ThirdParty::where('kategori_tp_id', 1)->get()]);
+    return view('purchase.create', [
+      'third_parties' => ThirdParty::where('kategori_tp_id', 1)->get(),
+      'barangs' => Barang::all(),
+    ]);
   }
 
   /**
