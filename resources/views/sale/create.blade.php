@@ -305,7 +305,7 @@
         success: function(data)
         {
             alert(data.success); // show response from the php script.
-            console.log(data.data)
+            window.location.href = "/sale";
         }
     });
 

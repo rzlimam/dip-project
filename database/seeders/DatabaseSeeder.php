@@ -61,6 +61,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SatuanBarangSeeder::class);
         $this->call(BentukBarangSeeder::class);
         $this->call(BarangSeeder::class);
+        $this->call(StockSeeder::class);
 
         Purchase::create([
             'third_party_id' => 1,

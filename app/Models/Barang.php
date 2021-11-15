@@ -13,7 +13,7 @@ class Barang extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    protected $fillable = ['kode', 'name', 'satuanbarang_id', 'bentukbarang_id', 'isActive'];
+    //protected $fillable = ['kode', 'name', 'satuanbarang_id', 'bentukbarang_id', 'is_active'];
 
     public function satuanbarang()
     {
@@ -28,5 +28,10 @@ class Barang extends Model
     public function sales()
     {
         return $this->hasMany(Sale::class);
+    }
+
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class);
     }
 }

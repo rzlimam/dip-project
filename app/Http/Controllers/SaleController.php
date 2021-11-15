@@ -6,6 +6,7 @@ use App\Models\Sale;
 use App\Models\ThirdParty;
 use App\Models\Barang;
 use App\Models\SaleDetail;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -51,31 +52,47 @@ class SaleController extends Controller
       
         //   $validated['total_price'] = 0;
         //   $validated['created_by'] = 1;
-        //$data = new Sale();
+
+        //Insert data sale
         $data['faktur'] = $purchase['faktur'];
         $data['third_party_id'] = $purchase['third_party_id'];
         $data['date'] = $purchase['date'];
         $data['total_price'] = 0;
         $data['created_by'] = 1;
-        //$sale = $data->save();
         $sale = Sale::create($data);
         $sale_id = $sale->id;
 
+        $total = 0;
+
+        //insert sale detail
         foreach($barangs as $barang){
-            //$detail = new SaleDetail();
             $detail['sale_id'] = $sale_id;
             $detail['barang_id'] = $barang['id'];
             $detail['qty'] = $barang['qty'];
             $detail['price_unit'] = $barang['price_unit'];
             $detail['price_total'] = $barang['price_total'];
-            //$detail->save();
             SaleDetail::create($detail);
+
+            $total += $detail['price_total'];
+
+            //Update stock
+            $stock = Stock::where('id', $detail['barang_id'])->get();
+            $stock[0]->qty -= $detail['qty'];
+
+            $xx['barang_id'] = $stock[0]->barang->id;
+            $xx['qty'] = $stock[0]->qty;
+
+            Stock::where('id', $detail['barang_id'])->update($xx);
         }
-      
+
+        //update total price sale 
+        $data['total_price'] = $total;
+        Sale::where('id', $sale_id)->update($data);
+
           //return redirect('/sale')->with('success', 'Berhasil menambahkan data penjualan.');
         return response()->json([
             'success'=>'Berhasil menambahkan data penjualan.',
-            'data' => $sale
+            'data' => $request
         ]);
     }
 
@@ -87,13 +104,9 @@ class SaleController extends Controller
      */
     public function show(Sale $sale)
     {
-        dd([
-            $sale,
-            SaleDetail::where('sale_id', $sale->id)->get()
-        ]);
         return view('sale.show', [
             'sale' => $sale,
-            'detail' => SaleDetail::where('sale_id', $sale->id)->get()
+            'details' => SaleDetail::where('sale_id', $sale->id)->get()
         ]);
     }
 

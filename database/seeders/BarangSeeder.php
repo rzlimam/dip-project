@@ -16,9 +16,32 @@ class BarangSeeder extends Seeder
    */
   public function run()
   {
-    Barang::factory(5)
+    // Barang::factory(5)
       // ->for(BentukBarang::factory())
       // ->for(SatuanBarang::factory())
-      ->create();
+      // ->create();
+    Barang::create([
+      'kode' => 'ALK',
+      'name' => 'Alkohol',
+      'satuanbarang_id' => 1,
+      'bentukbarang_id' => 1,
+      'is_active' => 1
+    ]);
+
+    Barang::create([
+      'kode' => 'MTL',
+      'name' => 'Methanol',
+      'satuanbarang_id' => 1,
+      'bentukbarang_id' => 1,
+      'is_active' => 1
+    ]);
+
+    Barang::create([
+      'kode' => 'PLAT',
+      'name' => 'Plat',
+      'satuanbarang_id' => 3,
+      'bentukbarang_id' => 2,
+      'is_active' => 1
+    ]);
   }
 }

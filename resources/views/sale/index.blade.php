@@ -56,7 +56,7 @@
                 <th>#</th>
                 <th>Faktur</th>
                 <th>Customer</th>
-                <th>Total Harga Penjualan</th>
+                <th>Total Penjualan</th>
                 <th>Tanggal</th>
                 <th>Action</th>
               </tr>

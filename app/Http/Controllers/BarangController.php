@@ -18,7 +18,7 @@ class BarangController extends Controller
   {
     return view('barang.index', [
       // 'barangs' => Barang::all()
-      'barangs' => Barang::where('isActive', true)->get()
+      'barangs' => Barang::where('is_active', true)->get()
     ]);
   }
 

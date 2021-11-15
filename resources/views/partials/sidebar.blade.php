@@ -1,15 +1,25 @@
 <div class="main-sidebar">
   <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
-      <a href="index.html">Stisla</a>
+      <a href="/">PT. Dhiar Lestari Perkasa</a>
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
-      <a href="index.html">Stisla</a>
+      <a href="index.html">DLP</a>
     </div>
     <ul class="sidebar-menu">
       <li class="menu-header"></li>
       <li class="nav-item active">
         <a href="/" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+      </li>
+      <li class="menu-header">Stok</li>
+      <li class="nav-item">
+        <a href="/purchase" class="nav-link"><i class="fas fa-dollar-sign"></i> <span>Pembelian</span></a>
+      </li>
+      <li>
+        <a href="/sale" class="nav-link"><i class="fas fa-dollar-sign"></i> <span>Penjualan</span></a>
+      </li>
+      <li>
+        <a href="/stock" class="nav-link"><i class="fas fa-dollar-sign"></i> <span>Stok Barang</span></a>
       </li>
       <li class="menu-header">Barang</li>
       <li class="nav-item dropdown">
@@ -26,15 +36,6 @@
       </li>
       <li class="nav-item">
         <a href="/supplier" class="nav-link"><i class="fas fa-address-book"></i> <span>Supplier</span></a>
-      </li>
-      <li class="menu-header">Stok</li>
-      <li class="nav-item">
-        <a href="/purchase" class="nav-link">
-          <i class="fas fa-dollar-sign"></i> <span>Pembelian</span>
-        </a>
-        <a href="/sale" class="nav-link">
-          <i class="fas fa-dollar-sign"></i> <span>Penjualan</span>
-        </a>
       </li>
       <li class="menu-header">Manajemen Akun</li>
       <li class="nav-item">
