@@ -53,7 +53,6 @@ class BarangController extends Controller
 
     $validated['kode'] = strtoupper($validated['kode']);
     $validated['isActive'] = true;
-
     Barang::create($validated);
 
     return redirect('/barang')->with('success', 'Berhasil menambahkan barang barang.');

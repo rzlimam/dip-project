@@ -18,7 +18,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <h4>Form Tambah Bentuk Barang</h4>
+          <h4>Form Tambah Barang</h4>
         </div>
 
         <div class="card-body">
@@ -29,6 +29,7 @@
                 <label>Kode</label>
 
                 <input type="text" class="form-control @error('kode') is-invalid @enderror" id="kode" name="kode" value="{{ old('kode') }}" placeholder="Kode barang...">
+
                 @error('kode')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -40,6 +41,7 @@
                 <label>Nama</label>
 
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="Nama barang...">
+
                 @error('name')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -50,67 +52,40 @@
               <div class="form-group">
                 <label>Bentuk</label>
 
-                <select class="form-control select2" name="satuan_id">
+                <select class="form-control select2" name="bentukbarang_id">
                   @foreach ($bentuks as $bentuk)
-                    @if (old('satuan_id') == $bentuk->id)
-                      <option value="{{ $bentuk->id }}" selected>{{ $bentuk->nama }}</option>      
-                    @else
-                      <option value="{{ $bentuk->id }}">{{ $bentuk->nama }}</option>  
-                    @endif
+                  @if (old('bentukbarang_id') == $bentuk->id)
+                  <option value="{{ $bentuk->id }}" selected>
+                    {{ $bentuk->nama }}
+                  </option>
+                  @else
+                  <option value="{{ $bentuk->id }}">
+                    {{ $bentuk->nama }}
+                  </option>
+                  @endif
                   @endforeach
                 </select>
-
-                {{-- <input list="bentukbarang_ids" class="form-control @error('bentukbarang_id') is-invalid @enderror" id="bentukbarang_id" name="bentukbarang_id" value="{{ old('bentukbarang_id') }}" placeholder="-- Pilih bentuk barang --">
-
-                <datalist id="bentukbarang_ids">
-                  @foreach($bentuks as $bentuk)
-                  <option value="{{$bentuk->id}}">{{$bentuk->nama}}</option>
-                  @endforeach
-                </datalist>
-
-                @error('bentukbarang_id')
-                <div class="invalid-feedback">
-                  {{ $message }}
-                </div>
-                @enderror --}}
               </div>
 
               <div class="form-group">
                 <label>Satuan</label>
 
-                <select class="form-control select2" name="satuan_id">
+                <select class="form-control select2" name="satuanbarang_id">
                   @foreach ($satuans as $satuan)
-                    @if (old('satuan_id') == $satuan->id)
-                      <option value="{{ $satuan->id }}" selected>{{ $satuan->nama }}</option>      
-                    @else
-                      <option value="{{ $satuan->id }}">{{ $satuan->nama }}</option>  
-                    @endif
+                  @if (old('satuanbarang_id') == $satuan->id)
+                  <option value="{{ $satuan->id }}" selected>
+                    {{ $satuan->nama }}
+                  </option>
+                  @else
+                  <option value="{{ $satuan->id }}">{{ $satuan->nama }}</option>
+                  @endif
                   @endforeach
                 </select>
-
-                {{-- <input list="satuanbarang_ids" class="form-control @error('satuanbarang_id') is-invalid @enderror" id="satuanbarang_id" name="satuanbarang_id" value="{{ old('satuanbarang_id') }}" placeholder="-- Pilih satuan barang --">
-
-                <datalist id="satuanbarang_ids">
-                  @foreach($satuans as $satuan)
-                  <option value="{{$satuan->id}}">{{$satuan->nama}}</option>
-                  @endforeach
-                </datalist> --}}
-
-                {{-- @error('satuanbarang_id')
-                <div class="invalid-feedback">
-                  {{ $message }}
-                </div>
-                @enderror --}}
               </div>
 
               <button type="submit" class="btn btn-primary">Simpan</button>
             </form>
           </div>
-        </div>
-
-        <div class="card-footer text-right">
-          <nav class="d-inline-block">
-          </nav>
         </div>
       </div>
     </div>
