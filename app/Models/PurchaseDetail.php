@@ -9,11 +9,12 @@ class PurchaseDetail extends Model
 {
   use HasFactory;
 
-  protected $guarded = ['id'];
+  // protected $guarded = ['id'];
+  protected $hidden = ['id'];
 
   public function barang()
   {
-    return $this->belongsTo(Barang::class);
+    return $this->belongsTo(Barang::class, 'barang_id');
   }
 
   public function purchase()

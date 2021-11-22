@@ -7,6 +7,7 @@ use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use App\Models\ThirdParty;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
@@ -129,12 +130,27 @@ class PurchaseController extends Controller
   /**
    * Show the form for editing the specified resource.
    *
-   * @param  int  $id
+   * @param  \App\Models\Purchase  $purchase
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function edit(Purchase $purchase)
   {
-    //
+    $barangs = Barang::orderBy('name')->get();
+    $third_parties = ThirdParty::where('kategori_tp_id', 1)->get();
+    $purchase_details = PurchaseDetail::where('purchase_id', $purchase->id)->get();
+
+    $i = 0;
+    foreach ($purchase_details as $v) {
+      $purchase_details[$i]['barang_name'] = $v->barang->name;
+      $i++;
+    }
+
+    return view('purchase.edit', [
+      'barangs' => $barangs,
+      'third_parties' => $third_parties,
+      'purchase' => $purchase,
+      'purchase_details' => $purchase_details
+    ]);
   }
 
   /**
@@ -146,7 +162,85 @@ class PurchaseController extends Controller
    */
   public function update(Request $request, $id)
   {
-    //
+    $purchase = $request->purchase;
+    $purchase_detail_old = [];
+    $barangs = $request->barangs;
+
+    DB::beginTransaction();
+    try {
+      $purchase_detail_old = PurchaseDetail::where('purchase_id', $id)->get();
+      $total = 0;
+      DB::table('purchases')->where('id', '=', $id)->update(array(
+        'faktur' => $purchase['faktur'],
+        'third_party_id' => $purchase['third_party_id'],
+        'date' => $purchase['date'],
+        'updated_at' => \Carbon\Carbon::now(),
+      ));
+
+      foreach ($purchase_detail_old as $value) {
+        DB::update(
+          'UPDATE stocks SET qty=qty-?, updated_at=? WHERE barang_id=?',
+          [
+            (int)$value['qty'],
+            \Carbon\Carbon::now(),
+            $value['barang_id']
+          ]
+        );
+      }
+
+      DB::table('purchase_details')->where('purchase_id', '=', $id)->delete();
+      
+      foreach ($barangs as $barang) {
+        DB::table('purchase_details')
+        ->insert(array(
+          'purchase_id' => $id,
+          'barang_id' => $barang['barang_id'],
+          'qty' => $barang['qty'],
+          'price_unit' => $barang['price_unit'],
+          'price_total' => $barang['price_total'],
+          "created_at" =>  \Carbon\Carbon::now(),
+          "updated_at" => \Carbon\Carbon::now(),
+        ));
+        
+        $total += $barang['price_total'];
+        
+        // $debugger = true;
+        DB::update(
+          'UPDATE stocks SET qty=qty+?, updated_at=? WHERE barang_id=?',
+          [
+            (int)$barang['qty'],
+            \Carbon\Carbon::now(),
+            $barang['barang_id']
+            ]
+          );
+        }
+        
+      DB::table('purchases')
+      ->where('id', $id)
+        ->update(['total_price' => $total]);
+        
+        // DB::rollback();
+        DB::commit();
+
+      $code = 200;
+      $message = 'Berhasil memperbarui data pembelian.';
+    } catch (\Exception $e) {
+      DB::rollback();
+
+      $code = 500;
+      $message = 'Gagal memperbarui data pembelian.';
+    }
+    // $code = 500;
+    // $message = 'Gagal memperbarui data pembelian.';
+
+    return response([
+      'id' => $id,
+      'code' => $code,
+      'message' => $message,
+      'purchase' => $purchase,
+      'purchase_detail_old' => $purchase_detail_old,
+      'barangs' => $barangs,
+    ], $code);
   }
 
   /**

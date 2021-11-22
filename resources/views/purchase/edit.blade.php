@@ -4,6 +4,7 @@
 <section class="section">
   <div class="section-header">
     <h1>Purchasing</h1>
+
     <div class="section-header-breadcrumb">
       <div class="breadcrumb-item active"><a href="/">Dashboard</a></div>
       <div class="breadcrumb-item">Purchasing</div>
@@ -14,19 +15,21 @@
 <div class="section-header">
   <div class="row">
     <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          <h4>Form Tambah Purchasing</h4>
-        </div>
+      <form action="/purchase" id="purchase-form">
+        @csrf
+        @method('put')
+        <div class="card">
+          <div class="card-header">
+            <h4>Form Tambah Purchasing</h4>
+          </div>
 
-        <form action="/purchase" method="POST" id="purchase-form">
-          @csrf
           <div class="card-body">
             <div class="col-md-6">
               <div class="form-group">
                 <label>Faktur</label>
+                <!-- <input type="text" class="form-control @error('id') is-invalid @enderror" id="id" name="id" placeholder="Faktur..." value="{{ old('id', $purchase->id) }}" required readonly> -->
 
-                <input type="text" class="form-control @error('faktur') is-invalid @enderror" id="faktur" name="faktur" placeholder="Faktur..." value="{{ old('faktur') }}" required autofocus>
+                <input type="text" class="form-control @error('faktur') is-invalid @enderror" id="faktur" name="faktur" placeholder="Faktur..." value="{{ old('faktur', $purchase->faktur) }}" required autofocus>
 
                 @error('name')
                 <div class="invalid-feedback">
@@ -43,7 +46,7 @@
                     -- Pilih Supplier --
                   </option>
                   @foreach ($third_parties as $tp)
-                  @if (old('third_party_id') == $tp->id)
+                  @if (old('third_party_id', $purchase->third_party_id) == $tp->id)
                   <option value="{{ $tp->id }}" selected>
                     {{ $tp->name }}
                   </option>
@@ -63,7 +66,7 @@
               <div class="form-group">
                 <label>Tanggal</label>
 
-                <input type="date" class="form-control @error('date') is-invalid @enderror" id="date" name="date" value="{{ old('date') }}" required>
+                <input type="date" class="form-control @error('date') is-invalid @enderror" id="date" name="date" value="{{ old('date', $purchase->date) }}" required>
 
                 @error('date')
                 <div class="invalid-feedback">
@@ -106,11 +109,11 @@
             </div>
 
             <button type="submit" class="btn btn-primary" id="save-purchase-button">Simpan</button>
-        </form>
-      </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-</div>
 </div>
 
 <div class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" id="purchase-detail-form-modal">
@@ -165,12 +168,35 @@
 </div>
 
 <script type='text/javascript'>
-  let barangs = [];
+  var purchase_details = @json($purchase_details);
   let count_barangs = 0;
   let $list_barangs = $('#list-barangs');
   let purchase_detail_form = document.getElementById('purchase-detail-form');
 
   $(document).ready(function() {
+    $.map(purchase_details, function(barang) {
+      barang._id = Math.floor(Math.random() * 1000) + 1;
+
+      $list_barangs.children('tbody').append(`
+        <tr id='${barang._id}'>
+          <td>${++count_barangs}</td>
+          <td>${barang.barang_name}</td>
+          <td>${barang.qty}</td>
+          <td>${barang.price_unit}</td>
+          <td>${barang.price_total}</td>
+          <td>
+            <button class="btn btn-warning edit-btn" data-id="${barang._id}">
+              Edit
+            </button>
+
+            <button class="btn btn-danger remove-btn" data-id="${barang._id}">
+              Hapus
+            </button>
+          </td>
+        </tr>
+      `);
+    });
+
     //reset form pembelian barang setiap klik tambah barang baru
     $('#add-barang-btn').on('click', function() {
       $('#append-barang-btn').show();
@@ -211,8 +237,9 @@
       let $cols;
 
       $(document.getElementById(_id)).remove();
+      count_barangs--;
 
-      barangs = barangs.filter(barang => barang._id != _id);
+      purchase_details = purchase_details.filter(barang => barang._id != _id);
 
       $rows = $list_barangs.find('tbody tr');
 
@@ -227,8 +254,8 @@
       event.preventDefault();
 
       $.ajax({
-        type: "POST",
-        url: "{{ route('purchase.store') }}",
+        type: "PUT",
+        url: "{{ route('purchase.update', $purchase->id) }}",
         data: {
           _token: $("input[name=_token]").val(),
           purchase: {
@@ -236,19 +263,18 @@
             third_party_id: $("#third-party-id").val(),
             date: $("#date").val()
           },
-          barangs: barangs
+          barangs: purchase_details
         },
         error: function(xhr) {
           console.error(`${xhr.status}: ${xhr.statusText}`);
+          console.log(xhr);
 
           alert(xhr.responseJSON.message);
         },
         success: function(response) {
           alert(response.message); // show response from the php script.
 
-          if (response.code === 201) {
-            window.location.href = "/purchase";
-          }
+          window.location.href = "/purchase";
         }
       });
     });
@@ -269,18 +295,18 @@
   const addBarang = () => {
     let barang = {
       _id: Math.floor(Math.random() * 1000) + 1,
-      id: $("#id-barang").val(),
+      barang_id: $("#id-barang").val(),
       name: $("#id-barang option:selected").text(),
       qty: $("#kuantitas-barang").val(),
       price_unit: $("#harga-satuan-barang").val(),
       price_total: $("#harga-total-pembelian").val()
     };
 
-    barangs.push(barang);
+    purchase_details.push(barang);
 
     $list_barangs.children('tbody').append(`
       <tr id='${barang._id}'>
-        <td>${barangs.length}</td>
+        <td>${purchase_details.length}</td>
         <td>${barang.name}</td>
         <td>${barang.qty}</td>
         <td>${barang.price_unit}</td>
