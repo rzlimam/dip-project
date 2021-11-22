@@ -19,7 +19,7 @@
           <h4>Form Tambah Purchasing</h4>
         </div>
 
-        <form action="/purchase" method="POST">
+        <form action="/purchase" method="POST" id="purchase-form">
           @csrf
           <div class="card-body">
             <div class="col-md-6">
@@ -38,13 +38,15 @@
               <div class="form-group">
                 <label>Supplier</label>
 
-                <select class="form-control select2" name="third_party_id" required>
+                <select class="form-control select2" name="third_party_id" id="third-party-id" required>
                   <option value="" disabled selected>
                     -- Pilih Supplier --
                   </option>
                   @foreach ($third_parties as $tp)
                   @if (old('third_party_id') == $tp->id)
-                  <option value="{{ $tp->id }}" selected>{{ $tp->name }}</option>
+                  <option value="{{ $tp->id }}" selected>
+                    {{ $tp->name }}
+                  </option>
                   @else
                   <option value="{{ $tp->id }}">{{ $tp->name }}</option>
                   @endif
@@ -103,9 +105,7 @@
               </div>
             </div>
 
-            <button type="submit" class="btn btn-primary" id="save-purchase-button">
-              Simpan
-            </button>
+            <button type="submit" class="btn btn-primary" id="save-purchase-button">Simpan</button>
         </form>
       </div>
     </div>
@@ -136,13 +136,13 @@
           <div class="form-group">
             <label for="kuantitas-barang">Kuantitas</label>
 
-            <input type="number" class="form-control" name="kuantitas-barang" id="kuantitas-barang" placeholder="Kuantitas Barang..." min=0 step=1 required>
+            <input type="number" class="form-control" name="kuantitas-barang" id="kuantitas-barang" placeholder="Kuantitas Barang..." min=0 step=1 oninput="updateTotal()" required>
           </div>
 
           <div class="form-group">
             <label for="harga-satuan-barang">Harga Satuan</label>
 
-            <input type="number" class="form-control" name="harga-satuan-barang" id="harga-satuan-barang" placeholder="Harga Satuan Barang..." min=0 required>
+            <input type="number" class="form-control" name="harga-satuan-barang" id="harga-satuan-barang" placeholder="Harga Satuan Barang..." min=0 oninput="updateTotal()" required>
           </div>
 
           <div class="form-group">
@@ -170,65 +170,111 @@
   let $list_barangs = $('#list-barangs');
   let purchase_detail_form = document.getElementById('purchase-detail-form');
 
-  //reset form pembelian barang setiap klik tambah barang baru
-  $('#add-barang-btn').on('click', function() {
-    $('#append-barang-btn').show();
-    $('#update-barang-btn').hide();
+  $(document).ready(function() {
+    console.error("test");
+    //reset form pembelian barang setiap klik tambah barang baru
+    $('#add-barang-btn').on('click', function() {
+      $('#append-barang-btn').show();
+      $('#update-barang-btn').hide();
 
-    purchase_detail_form.reset();
-    purchase_detail_form.onsubmit = function(e) {
-      e.preventDefault();
-      addBarang();
-    };
-  });
+      purchase_detail_form.reset();
+      purchase_detail_form.onsubmit = function(e) {
+        e.preventDefault();
+        addBarang();
+      };
+    });
 
-  $list_barangs.on("click", ".edit-btn", function() {
-    $("#append-barang-btn").hide();
-    $("#update-barang-btn").show();
+    $list_barangs.on("click", ".edit-btn", function() {
+      $("#append-barang-btn").hide();
+      $("#update-barang-btn").show();
 
-    let id = $(this).data('id');
-    let index = barangs.findIndex(barang => barang._id == id);
-    let barang = barangs[index];
+      let id = $(this).data('id');
+      let index = barangs.findIndex(barang => barang._id == id);
+      let barang = barangs[index];
 
-    $("#id-barang").val(barang.id);
-    $("#kuantitas-barang").val(barang.qty);
-    $("#harga-satuan-barang").val(barang.price_unit);
-    $("#harga-total-pembelian").val(barang.price_unit * barang.qty);
-    $("#update-barang-btn").data('index', index);
-    purchase_detail_form.onsubmit = function(e) {
-      e.preventDefault();
-      updateBarang(index);
-    };
+      $("#id-barang").val(barang.id);
+      $("#kuantitas-barang").val(barang.qty);
+      $("#harga-satuan-barang").val(barang.price_unit);
+      $("#harga-total-pembelian").val(barang.price_unit * barang.qty);
+      $("#update-barang-btn").data('index', index);
+      purchase_detail_form.onsubmit = function(e) {
+        e.preventDefault();
+        updateBarang(index);
+      };
 
-    $("#purchase-detail-form-modal").modal('show');
-  });
+      $("#purchase-detail-form-modal").modal('show');
+    });
 
-  //hapus elemen html tr>td barang dari list pembelian dengan cara mengakses tr yang sudah diberikan id ketika proses tambah barang dan mereset penomoran dengan mengguanakan index terbaru elemen html tr ditambah 1
-  $list_barangs.on('click', '.remove-btn', function() {
-    let _id = $(this).data('id');
-    let $rows;
-    let $cols;
+    //hapus elemen html tr>td barang dari list pembelian dengan cara mengakses tr yang sudah diberikan id ketika proses tambah barang dan mereset penomoran dengan mengguanakan index terbaru elemen html tr ditambah 1
+    $list_barangs.on('click', '.remove-btn', function() {
+      let _id = $(this).data('id');
+      let $rows;
+      let $cols;
 
-    $(document.getElementById(_id)).remove();
+      $(document.getElementById(_id)).remove();
 
-    barangs = barangs.filter(barang => barang._id != _id);
+      barangs = barangs.filter(barang => barang._id != _id);
 
-    $rows = $list_barangs.find('tbody tr');
+      $rows = $list_barangs.find('tbody tr');
 
-    $.each($rows, (index, row) => {
-      $cols = $(row).find('td');
+      $.each($rows, (index, row) => {
+        $cols = $(row).find('td');
 
-      $cols.first().text(index + 1);
+        $cols.first().text(index + 1);
+      });
+    });
+
+    $("#purchase-form").submit(function(event) {
+      event.preventDefault();
+
+      $.ajax({
+        type: "POST",
+        url: "{{ route('purchase.store') }}",
+        data: {
+          _token: $("input[name=_token]").val(),
+          purchase: {
+            faktur: $("#faktur").val(),
+            third_party_id: $("#third-party-id").val(),
+            date: $("#date").val()
+          },
+          barangs: barangs
+        },
+        error: function(xhr) {
+          console.error(`${xhr.status}: ${xhr.statusText}`);
+
+          alert(xhr.responseJSON.message);
+        },
+        success: function(response) {
+          alert(response.message); // show response from the php script.
+
+          if (response.code === 201) {
+            window.location.href = "/purchase";
+          }
+        }
+      });
     });
   });
+
+  function updateTotal() {
+    let total;
+    let qty = $("#kuantitas-barang").val();
+    let price = $("#harga-satuan-barang").val();
+
+    if (!$.isEmptyObject(qty) && !$.isEmptyObject(price)) {
+      total = parseFloat(qty) * parseFloat(price);
+
+      $("#harga-total-pembelian").val(total);
+    }
+  }
 
   const addBarang = () => {
     let barang = {
       _id: Math.floor(Math.random() * 1000) + 1,
       id: $("#id-barang").val(),
-      nama: $("#id-barang option:selected").text(),
+      name: $("#id-barang option:selected").text(),
       qty: $("#kuantitas-barang").val(),
       price_unit: $("#harga-satuan-barang").val(),
+      price_total: $("#harga-total-pembelian").val()
     };
 
     barangs.push(barang);
@@ -236,7 +282,7 @@
     $list_barangs.children('tbody').append(`
       <tr id='${barang._id}'>
         <td>${barangs.length}</td>
-        <td>${barang.nama}</td>
+        <td>${barang.name}</td>
         <td>${barang.qty}</td>
         <td>${barang.price_unit}</td>
         <td>${barang.qty*barang.price_unit}</td>
@@ -261,11 +307,11 @@
     let cols = $row.find('td');
 
     barangs[index].id = $('#id-barang').val();
-    barangs[index].nama = $('#id-barang option:selected').text();
+    barangs[index].name = $('#id-barang option:selected').text();
     barangs[index].qty = $('#kuantitas-barang').val();
     barangs[index].price_unit = $('#harga-satuan-barang').val();
 
-    cols[1].textContent = barangs[index].nama;
+    cols[1].textContent = barangs[index].name;
     cols[2].textContent = barangs[index].qty;
     cols[3].textContent = barangs[index].price_unit;
     cols[4].textContent = barangs[index].price_unit * barangs[index].qty;

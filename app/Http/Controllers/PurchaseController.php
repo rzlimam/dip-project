@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use App\Models\Purchase;
+use App\Models\PurchaseDetail;
 use App\Models\ThirdParty;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
 {
@@ -17,9 +18,9 @@ class PurchaseController extends Controller
    */
   public function index()
   {
-    // dd(Purchase::all());
+    $purchases = Purchase::orderBy('date', 'desc')->get();
 
-    return view('purchase.index', ['purchases' => Purchase::all()]);
+    return view('purchase.index', ['purchases' => $purchases]);
   }
 
   /**
@@ -29,9 +30,12 @@ class PurchaseController extends Controller
    */
   public function create()
   {
+    $barangs = Barang::orderBy('name')->get();
+    $third_parties = ThirdParty::where('kategori_tp_id', 1)->get();
+
     return view('purchase.create', [
-      'third_parties' => ThirdParty::where('kategori_tp_id', 1)->get(),
-      'barangs' => Barang::all(),
+      'third_parties' => $third_parties,
+      'barangs' => $barangs,
     ]);
   }
 
@@ -43,29 +47,83 @@ class PurchaseController extends Controller
    */
   public function store(Request $request)
   {
-    $validated = $request->validate([
-      'faktur' => 'required|max:255|unique:purchases',
-      'third_party_id' => 'required',
-      'date' => 'required',
-    ]);
+    $barangs = $request->barangs;
+    $purchase = $request->purchase;
 
-    $validated['total_price'] = 0;
-    $validated['created_by'] = 1;
+    DB::beginTransaction();
 
-    Purchase::create($validated);
+    try {
+      $purchase_id = DB::table('purchases')->insertGetId(array(
+        'third_party_id' => $purchase['third_party_id'],
+        'date' => $purchase['date'],
+        'faktur' => $purchase['faktur'],
+        'total_price' => 0,
+        "created_by" => 1,
+        "created_at" =>  \Carbon\Carbon::now(),
+        "updated_at" => \Carbon\Carbon::now(),
+      ));
 
-    return redirect('/purchase')->with('success', 'Berhasil menambahkan purchasing.');
+      $total = 0;
+
+      foreach ($barangs as $barang) {
+        DB::table('purchase_details')
+          ->insert(array(
+            'purchase_id' => $purchase_id,
+            'barang_id' => $barang['id'],
+            'qty' => $barang['qty'],
+            'price_unit' => $barang['price_unit'],
+            'price_total' => $barang['price_total'],
+            "created_at" =>  \Carbon\Carbon::now(),
+            "updated_at" => \Carbon\Carbon::now(),
+          ));
+
+        $total += $barang['price_total'];
+
+        DB::update(
+          'UPDATE stocks SET qty=qty+?, updated_at=? WHERE barang_id=?',
+          [
+            (int)$barang['qty'],
+            \Carbon\Carbon::now(),
+            $barang['id']
+          ]
+        );
+      }
+
+      DB::table('purchases')
+        ->where('id', $purchase_id)
+        ->update(['total_price' => $total]);
+
+      DB::commit();
+
+      $code = 201;
+      $message = 'Berhasil menambahkan data pembelian.';
+    } catch (\Exception $e) {
+      DB::rollback();
+
+      $code = 500;
+      $message = 'Gagal memasukan data pembelian.';
+    }
+
+    return response([
+      'code' => $code,
+      'message' => $message,
+    ], $code);
   }
 
   /**
    * Display the specified resource.
    *
-   * @param  int  $id
+   * @param  \App\Models\Purchase  $purchase
    * @return \Illuminate\Http\Response
    */
-  public function show($id)
+  public function show(Purchase $purchase)
   {
-    //
+    $purchase_details = PurchaseDetail::where('purchase_id', $purchase->id)->get();
+
+    return view('purchase.show', [
+      'purchase' => $purchase,
+      'details' => $purchase_details,
+    ]);
   }
 
   /**

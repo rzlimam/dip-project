@@ -50,13 +50,13 @@ class SaleController extends Controller
         //     'third_party_id' => 'required',
         //     'date' => 'required',
         //   ]);
-      
+
         //   $validated['total_price'] = 0;
         //   $validated['created_by'] = 1;
 
         DB::beginTransaction();
 
-        try{
+        try {
             $sale_id = DB::table('sales')->insertGetId(array(
                 'third_party_id' => $purchase['third_party_id'],
                 'date' => $purchase['date'],
@@ -65,11 +65,11 @@ class SaleController extends Controller
                 "created_by" => 1,
                 "created_at" =>  \Carbon\Carbon::now(), # new \Datetime()
                 "updated_at" => \Carbon\Carbon::now(),  # new \Datetime()
-                ));
+            ));
 
             $total = 0;
 
-            foreach($barangs as $barang){
+            foreach ($barangs as $barang) {
                 DB::table('sale_details')
                     ->insert(array(
                         'sale_id' => $sale_id,
@@ -80,11 +80,13 @@ class SaleController extends Controller
                         "created_at" =>  \Carbon\Carbon::now(), # new \Datetime()
                         "updated_at" => \Carbon\Carbon::now(),  # new \Datetime()
                     ));
-                
+
                 $total += $barang['price_total'];
 
-                DB::update('update stocks set qty = qty - ?, updated_at = ? where barang_id = ?', 
-                    [(int)$barang['qty'], \Carbon\Carbon::now(), $barang['id']]);
+                DB::update(
+                    'update stocks set qty = qty - ?, updated_at = ? where barang_id = ?',
+                    [(int)$barang['qty'], \Carbon\Carbon::now(), $barang['id']]
+                );
             }
 
             DB::table('sales')
@@ -92,13 +94,12 @@ class SaleController extends Controller
                 ->update([
                     'total_price' => $total
                 ]);
-            
+
             DB::commit();
             $respCode = 200;
             $message = 'Berhasil menambahkan data penjualan.';
             $resp = $request;
-
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             $respCode = 201;
             $message = 'Gagal Memasukan data';
@@ -141,10 +142,10 @@ class SaleController extends Controller
         // $data['total_price'] = $total;
         // Sale::where('id', $sale_id)->update($data);
 
-          //return redirect('/sale')->with('success', 'Berhasil menambahkan data penjualan.');
+        //return redirect('/sale')->with('success', 'Berhasil menambahkan data penjualan.');
         return response()->json([
             'respCode' => $respCode,
-            'message'=> $message,
+            'message' => $message,
             'resp' => $resp
         ]);
     }

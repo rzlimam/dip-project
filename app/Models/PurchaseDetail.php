@@ -7,5 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class PurchaseDetail extends Model
 {
-    use HasFactory;
+  use HasFactory;
+
+  protected $guarded = ['id'];
+
+  public function barang()
+  {
+    return $this->belongsTo(Barang::class);
+  }
+
+  public function purchase()
+  {
+    return $this->belongsTo(Sale::class);
+  }
 }
