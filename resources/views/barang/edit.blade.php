@@ -17,7 +17,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <h4>Form Tambah Bentuk Barang</h4>
+          <h4>Form Edit Bentuk Barang</h4>
         </div>
 
         <div class="card-body">
@@ -50,13 +50,25 @@
               <div class="form-group">
                 <label>Bentuk</label>
 
-                <input list="bentukbarang_ids" class="form-control @error('bentukbarang_id') is-invalid @enderror" id="bentukbarang_id" name="bentukbarang_id" value="{{ old('bentukbarang_id', $barang->bentukbarang_id) }}" placeholder="-- Pilih bentuk barang --">
-
-                <datalist id="bentukbarang_ids">
-                  @foreach($bentuks as $bentuk)
-                  <option value="{{$bentuk->id}}">{{$bentuk->nama}}</option>
+                <select class="form-control select2 @error('bentukbarang_id') is-invalid @enderror" name="bentukbarang_id">
+                  <option value="" selected disabled>
+                    -- Pilih Bentuk Barang --
+                  </option>
+                  @foreach ($bentuks as $bentuk)
+                  @if (old('bentukbarang_id') == $bentuk->id)
+                  <option value="{{ $bentuk->id }}" selected>
+                    {{ $bentuk->nama }}
+                  </option>
+                  @else
+                  <option value="{{ $bentuk->id }}" @if ($barang->bentukbarang_id == $bentuk->id )
+                    selected
+                    @endif
+                    >
+                    {{ $bentuk->nama }}
+                  </option>
+                  @endif
                   @endforeach
-                </datalist>
+                </select>
 
                 @error('bentukbarang_id')
                 <div class="invalid-feedback">
@@ -68,13 +80,24 @@
               <div class="form-group">
                 <label>Satuan</label>
 
-                <input list="satuanbarang_ids" class="form-control @error('satuanbarang_id') is-invalid @enderror" id="satuanbarang_id" name="satuanbarang_id" value="{{ old('satuanbarang_id', $barang->satuanbarang_id) }}" placeholder="-- Pilih satuan barang --">
-
-                <datalist id="satuanbarang_ids">
-                  @foreach($satuans as $satuan)
-                  <option value="{{$satuan->id}}">{{$satuan->nama}}</option>
+                <select class="form-control select2 @error('satuanbarang_id') is-invalid @enderror" name="satuanbarang_id">
+                  <option value="" selected disabled>
+                    -- Pilih Satuan Barang --
+                  </option>
+                  @foreach ($satuans as $satuan)
+                  @if (old('satuanbarang_id') == $satuan->id)
+                  <option value="{{ $satuan->id }}" selected>
+                    {{ $satuan->nama }}
+                  </option>
+                  @else
+                  <option value="{{ $satuan->id }}" @if ($barang->satuanbarang_id == $satuan->id )
+                    selected
+                    @endif>
+                    {{ $satuan->nama }}
+                  </option>
+                  @endif
                   @endforeach
-                </datalist>
+                </select>
 
                 @error('satuanbarang_id')
                 <div class="invalid-feedback">
