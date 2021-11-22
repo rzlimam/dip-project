@@ -301,11 +301,20 @@
           date: $("#date").val()
         },
         barangs: barangs
-        }, 
+        },
+        error: function(xhr, status, error) {
+          var err = JSON.parse(xhr.responseText);
+          alert(error.Message);
+        },
         success: function(data)
         {
-            alert(data.success); // show response from the php script.
-            window.location.href = "/sale";
+            alert(data.message); // show response from the php script.
+            console.log(data);
+            if(data.respCode === 200){
+              window.location.href = "/sale";
+            } else {
+              // window.location.href = "/sale/create";
+            }
         }
     });
 
