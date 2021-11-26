@@ -234,12 +234,8 @@ class PurchaseController extends Controller
     // $message = 'Gagal memperbarui data pembelian.';
 
     return response([
-      'id' => $id,
       'code' => $code,
       'message' => $message,
-      'purchase' => $purchase,
-      'purchase_detail_old' => $purchase_detail_old,
-      'barangs' => $barangs,
     ], $code);
   }
 
