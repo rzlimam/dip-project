@@ -68,48 +68,48 @@
                 </div>
                 @enderror
               </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h4>Pembelian Barang</h4>
             </div>
 
-              <div class="card">
-                <div class="card-header">
-                  <h4>Pembelian Barang</h4>
-                </div>
-  
-                <div class="card-body">
-                  <div class="card-title">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#purchase-detail-form-modal" id="add-barang-btn">
-                      <i class="fas fa-plus"></i> Tambah barang
-                    </a>
-                  </div>
-  
-                  <div class="table-responsive">
-                    <table class="table table-bordered table-md" id="list-barangs">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Nama</th>
-                          <th>Kuantitas</th>
-                          <th>Harga Satuan</th>
-                          <th>Harga Total</th>
-                          <th>Aksi</th>
-                        </tr>
-                      </thead>
-  
-                      <tbody>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+            <div class="card-body">
+              <div class="card-title">
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#purchase-detail-form-modal" id="add-barang-btn">
+                  <i class="fas fa-plus"></i> Tambah barang
+                </a>
               </div>
-              
 
-              <button type="submit" class="btn btn-primary">Simpan</button>
-            </form>
+              <div class="table-responsive">
+                <table class="table table-bordered table-md" id="list-barangs">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nama</th>
+                      <th>Kuantitas</th>
+                      <th>Harga Satuan</th>
+                      <th>Harga Total</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
+
+
+          <button type="submit" class="btn btn-primary">Simpan</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>
 
 
@@ -136,13 +136,13 @@
           <div class="form-group">
             <label for="kuantitas-barang">Kuantitas</label>
 
-            <input type="number" class="form-control" name="kuantitas-barang" id="kuantitas-barang" placeholder="Kuantitas Barang..." min=0 step=1 required onchange="updateTotal()">
+            <input type="number" class="form-control" name="kuantitas-barang" id="kuantitas-barang" placeholder="Kuantitas Barang..." min=0 step=1 required oninput="updateTotal()">
           </div>
 
           <div class="form-group">
             <label for="harga-satuan-barang">Harga Satuan</label>
 
-            <input type="number" class="form-control" name="harga-satuan-barang" id="harga-satuan-barang" placeholder="Harga Satuan Barang..." min=0 required onchange="updateTotal()">
+            <input type="number" class="form-control" name="harga-satuan-barang" id="harga-satuan-barang" placeholder="Harga Satuan Barang..." min=0 required oninput="updateTotal()">
           </div>
 
           <div class="form-group">
@@ -165,72 +165,118 @@
 </div>
 
 <script>
-  function updateTotal() {
-    let qty = $("#kuantitas-barang").val();
-    let price = $("#harga-satuan-barang").val();
-    if(qty !== '' && price !== ''){
-      let total = parseFloat(qty)*parseFloat(price);
-      $("#harga-total-pembelian").val(total);
-    }
-  }
-
-
   let barangs = [];
   let count_barangs = 0;
   let $list_barangs = $('#list-barangs');
   let purchase_detail_form = document.getElementById('purchase-detail-form');
+  let stocks = @json($stocks);
 
-  //reset form pembelian barang setiap klik tambah barang baru
-  $('#add-barang-btn').on('click', function() {
-    $('#append-barang-btn').show();
-    $('#update-barang-btn').hide();
+  $(document).ready(function() {
+    //reset form pembelian barang setiap klik tambah barang baru
+    $('#add-barang-btn').on('click', function() {
+      let stock;
 
-    purchase_detail_form.reset();
-    purchase_detail_form.onsubmit = function(e) {
-      e.preventDefault();
-      addBarang();
-    };
-  });
+      $("#id-barang").on('change', function() {
+        stock = stocks.find(stock => stock.barang_id == $(this).val());
+        $('#kuantitas-barang').prop('max', stock.qty);
+      });
 
-  $list_barangs.on("click", ".edit-btn", function() {
-    $("#append-barang-btn").hide();
-    $("#update-barang-btn").show();
+      $('#append-barang-btn').show();
+      $('#update-barang-btn').hide();
 
-    let id = $(this).data('id');
-    let index = barangs.findIndex(barang => barang._id == id);
-    let barang = barangs[index];
+      purchase_detail_form.reset();
+      purchase_detail_form.onsubmit = function(e) {
+        e.preventDefault();
+        addBarang();
+      };
+    });
 
-    $("#id-barang").val(barang.id);
-    $("#kuantitas-barang").val(barang.qty);
-    $("#harga-satuan-barang").val(barang.price_unit);
-    $("#harga-total-pembelian").val(barang.price_unit * barang.qty);
-    $("#update-barang-btn").data('index', index);
-    purchase_detail_form.onsubmit = function(e) {
-      e.preventDefault();
-      updateBarang(index);
-    };
+    $list_barangs.on("click", ".edit-btn", function() {
+      $("#append-barang-btn").hide();
+      $("#update-barang-btn").show();
 
-    $("#purchase-detail-form-modal").modal('show');
-  });
+      let id = $(this).data('id');
+      let index = barangs.findIndex(barang => barang._id == id);
+      let barang = barangs[index];
 
-  //hapus elemen html tr>td barang dari list pembelian dengan cara mengakses tr yang sudah diberikan id ketika proses tambah barang dan mereset penomoran dengan mengguanakan index terbaru elemen html tr ditambah 1
-  $list_barangs.on('click', '.remove-btn', function() {
-    let _id = $(this).data('id');
-    let $rows;
-    let $cols;
+      $("#id-barang").val(barang.id);
+      $("#kuantitas-barang").val(barang.qty);
+      $("#harga-satuan-barang").val(barang.price_unit);
+      $("#harga-total-pembelian").val(barang.price_unit * barang.qty);
+      $("#update-barang-btn").data('index', index);
+      purchase_detail_form.onsubmit = function(e) {
+        e.preventDefault();
+        updateBarang(index);
+      };
 
-    $(document.getElementById(_id)).remove();
+      $("#purchase-detail-form-modal").modal('show');
+    });
 
-    barangs = barangs.filter(barang => barang._id != _id);
+    //hapus elemen html tr>td barang dari list pembelian dengan cara mengakses tr yang sudah diberikan id ketika proses tambah barang dan mereset penomoran dengan mengguanakan index terbaru elemen html tr ditambah 1
+    $list_barangs.on('click', '.remove-btn', function() {
+      let _id = $(this).data('id');
+      let $rows;
+      let $cols;
 
-    $rows = $list_barangs.find('tbody tr');
+      $(document.getElementById(_id)).remove();
 
-    $.each($rows, (index, row) => {
-      $cols = $(row).find('td');
+      barangs = barangs.filter(barang => barang._id != _id);
 
-      $cols.first().text(index + 1);
+      $rows = $list_barangs.find('tbody tr');
+
+      $.each($rows, (index, row) => {
+        $cols = $(row).find('td');
+
+        $cols.first().text(index + 1);
+      });
+    });
+
+    $("#sale-form").submit(function(event) {
+      event.preventDefault();
+
+      $.ajax({
+        // headers: {
+        // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        // }
+        type: "POST",
+        url: "{{ route('sale.store') }}",
+        data: {
+          _token: $("input[name=_token]").val(),
+          purchase: {
+            faktur: $("#faktur").val(),
+            third_party_id: $("#customer_id").val(),
+            date: $("#date").val()
+          },
+          barangs: barangs
+        },
+        success: function(response) {
+          alert(response.message); // show response from the php script.
+
+          console.log(response);
+
+          if (response.respCode === 200) {
+            window.location.href = "/sale";
+          } else {
+            // window.location.href = "/sale/create";
+          }
+        },
+        error: function(xhr) {
+          // var err = JSON.parse(xhr.responseText);
+          // alert(error.Message);
+          console.error(xhr);
+        },
+      });
     });
   });
+
+  function updateTotal() {
+    let qty = $("#kuantitas-barang").val();
+    let price = $("#harga-satuan-barang").val();
+    if (qty !== '' && price !== '') {
+      let total = parseFloat(qty) * parseFloat(price);
+      $("#harga-total-pembelian").val(total);
+    }
+  }
 
   const addBarang = () => {
     let barang = {
@@ -283,42 +329,5 @@
 
     $('#purchase-detail-form-modal').modal('hide');
   }
-
-  $("#sale-form").submit(function(event){
-    event.preventDefault();
-
-    $.ajax({
-        // headers: {
-        // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        // }
-        type: "POST",
-        url: "{{ route('sale.store') }}",
-        data: {
-        _token: $("input[name=_token]").val(),
-        purchase: {
-          faktur: $("#faktur").val(),
-          third_party_id: $("#customer_id").val(),
-          date: $("#date").val()
-        },
-        barangs: barangs
-        },
-        error: function(xhr, status, error) {
-          var err = JSON.parse(xhr.responseText);
-          alert(error.Message);
-        },
-        success: function(data)
-        {
-            alert(data.message); // show response from the php script.
-            console.log(data);
-            if(data.respCode === 200){
-              window.location.href = "/sale";
-            } else {
-              // window.location.href = "/sale/create";
-            }
-        }
-    });
-
-  });
 </script>
-
 @endsection
