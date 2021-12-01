@@ -9,6 +9,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PhoneController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
@@ -26,31 +27,41 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-  return view('home');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::middleware('auth')->group(function () {
+  Route::get('/', function () {
+    return view('home');
+  });
+
+  Route::resources([
+    '/barang' => BarangController::class,
+    '/satuan' => SatuanBarangController::class,
+    '/bentuk' => BentukBarangController::class,
+    '/supplier' => SupplierController::class,
+    '/customer' => CustomerController::class,
+    '/user' => UserController::class,
+    '/phones' => PhoneController::class,
+    '/emails' => EmailController::class,
+    '/alamats' => AlamatController::class,
+    '/purchase' => PurchaseController::class,
+    '/sale' => SaleController::class,
+    '/stock' => StockController::class
+  ]);
+
+  Route::get('supplier/{supplier}/contact', [SupplierController::class, 'contact']);
+  Route::resource('supplier.phones', PhoneController::class)->parameter('supplier', 'third_party')->only(['index', 'create', 'store']);
+  Route::resource('supplier.emails', EmailController::class)->parameter('supplier', 'third_party')->only(['index', 'create', 'store']);
+  Route::resource('supplier.alamats', AlamatController::class)->parameter('supplier', 'third_party')->only(['index', 'create', 'store']);
+
+  Route::get('customer/{customer}/contact', [CustomerController::class, 'contact']);
+  Route::resource('customer.phones', PhoneController::class)->parameter('customer', 'third_party')->only(['index', 'create', 'store']);
+  Route::resource('customer.emails', EmailController::class)->parameter('customer', 'third_party')->only(['index', 'create', 'store']);
+  Route::resource('customer.alamats', AlamatController::class)->parameter('customer', 'third_party')->only(['index', 'create', 'store']);
 });
 
-Route::resources([
-  '/barang' => BarangController::class,
-  '/satuan' => SatuanBarangController::class,
-  '/bentuk' => BentukBarangController::class,
-  '/supplier' => SupplierController::class,
-  '/customer' => CustomerController::class,
-  '/user' => UserController::class,
-  '/phones' => PhoneController::class,
-  '/emails' => EmailController::class,
-  '/alamats' => AlamatController::class,
-  '/purchase' => PurchaseController::class,
-  '/sale' => SaleController::class,
-  '/stock' => StockController::class
-]);
 
-Route::get('supplier/{supplier}/contact', [SupplierController::class, 'contact']);
-Route::resource('supplier.phones', PhoneController::class)->parameter('supplier', 'third_party')->only(['index', 'create', 'store']);
-Route::resource('supplier.emails', EmailController::class)->parameter('supplier', 'third_party')->only(['index', 'create', 'store']);
-Route::resource('supplier.alamats', AlamatController::class)->parameter('supplier', 'third_party')->only(['index', 'create', 'store']);
 
-Route::get('customer/{customer}/contact', [CustomerController::class, 'contact']);
-Route::resource('customer.phones', PhoneController::class)->parameter('customer', 'third_party')->only(['index', 'create', 'store']);
-Route::resource('customer.emails', EmailController::class)->parameter('customer', 'third_party')->only(['index', 'create', 'store']);
-Route::resource('customer.alamats', AlamatController::class)->parameter('customer', 'third_party')->only(['index', 'create', 'store']);
+

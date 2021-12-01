@@ -23,13 +23,13 @@
           {{ session('success') }}
         </div>
       </div>
-      @elseif (session()->has('deleted'))
+      @elseif (session()->has('failed'))
       <div class="alert alert-danger alert-dismissible show fade">
         <div class="alert-body">
           <button class="close" data-dismiss="alert">
             <span>&times;</span>
           </button>
-          {{ session('deleted') }}
+          {{ session('failed') }}
         </div>
       </div>
       @endif
@@ -53,6 +53,7 @@
                     <th>#</th>
                     <th>Nama Barang</th>
                     <th>Stok Barang</th>
+                    <th>Satuan Barang</th>
                     <th>Terakhir Diupdate</th>
                 </tr>
                 @foreach ($stocks as $stock)
@@ -60,6 +61,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $stock->barang->name }}</td>
                     <td>{{ $stock->qty }}</td>
+                    <td>{{ $stock->barang->satuanbarang->nama }}</td>
                     <td>{{ $stock->updated_at }}</td>
                 <tr>
                     @endforeach

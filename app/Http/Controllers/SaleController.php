@@ -195,6 +195,28 @@ class SaleController extends Controller
      */
     public function destroy(Sale $sale)
     {
-        //
+        DB::beginTransaction();
+        
+        try{
+            DB::table('sales')
+                ->where('id', $sale->id)
+                ->delete();
+            
+            DB::table('sale_details')
+                ->where('sale_id', $sale->id)
+                ->delete();
+
+            DB::commit();
+
+            $resp = "success";
+            $message = "Data penjualan telah dihapus";
+        } catch(\Exception $e){
+            DB::rollBack();
+
+            $resp = "failed";
+            $message = "Data penjualan gagal dihapus";
+        }
+
+        return redirect('/sale')->with($resp, $message);
     }
 }

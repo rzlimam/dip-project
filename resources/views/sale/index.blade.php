@@ -24,13 +24,13 @@
           {{ session('success') }}
         </div>
       </div>
-      @elseif (session()->has('deleted'))
+      @elseif (session()->has('failed'))
       <div class="alert alert-danger alert-dismissible show fade">
         <div class="alert-body">
           <button class="close" data-dismiss="alert">
             <span>&times;</span>
           </button>
-          {{ session('deleted') }}
+          {{ session('failed') }}
         </div>
       </div>
       @endif
