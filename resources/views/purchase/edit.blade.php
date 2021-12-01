@@ -185,11 +185,11 @@
           <td>${barang.price_unit}</td>
           <td>${barang.price_total}</td>
           <td>
-            <button class="btn btn-warning edit-btn" data-id="${barang._id}">
+            <button type='button' class="btn btn-warning edit-btn" data-id="${barang._id}">
               Edit
             </button>
 
-            <button class="btn btn-danger remove-btn" data-id="${barang._id}">
+            <button type='button' class="btn btn-danger remove-btn" data-id="${barang._id}">
               Hapus
             </button>
           </td>
@@ -214,13 +214,13 @@
       $("#update-barang-btn").show();
 
       let id = $(this).data('id');
-      let index = barangs.findIndex(barang => barang._id == id);
-      let barang = barangs[index];
+      let index = purchase_details.findIndex(barang => barang._id == id);
+      let barang = purchase_details[index];
 
-      $("#id-barang").val(barang.id);
+      $("#id-barang").val(barang.barang_id);
       $("#kuantitas-barang").val(barang.qty);
       $("#harga-satuan-barang").val(barang.price_unit);
-      $("#harga-total-pembelian").val(barang.price_unit * barang.qty);
+      $("#harga-total-pembelian").val(barang.price_total);
       $("#update-barang-btn").data('index', index);
       purchase_detail_form.onsubmit = function(e) {
         e.preventDefault();
@@ -267,7 +267,6 @@
         },
         error: function(xhr) {
           console.error(`${xhr.status}: ${xhr.statusText}`);
-          console.log(xhr);
 
           alert(xhr.responseJSON.message);
         },
@@ -310,7 +309,7 @@
         <td>${barang.name}</td>
         <td>${barang.qty}</td>
         <td>${barang.price_unit}</td>
-        <td>${barang.qty*barang.price_unit}</td>
+        <td>${barang.price_total}</td>
         <td>
           <button class="btn btn-warning edit-btn" data-id="${barang._id}">
             Edit
@@ -331,15 +330,16 @@
     let $row = $($rows[index]);
     let cols = $row.find('td');
 
-    barangs[index].id = $('#id-barang').val();
-    barangs[index].name = $('#id-barang option:selected').text();
-    barangs[index].qty = $('#kuantitas-barang').val();
-    barangs[index].price_unit = $('#harga-satuan-barang').val();
+    purchase_details[index].id = $('#id-barang').val();
+    purchase_details[index].name = $('#id-barang option:selected').text();
+    purchase_details[index].qty = $('#kuantitas-barang').val();
+    purchase_details[index].price_unit = $('#harga-satuan-barang').val();
+    purchase_details[index].price_total = $('#harga-total-pembelian').val();
 
-    cols[1].textContent = barangs[index].name;
-    cols[2].textContent = barangs[index].qty;
-    cols[3].textContent = barangs[index].price_unit;
-    cols[4].textContent = barangs[index].price_unit * barangs[index].qty;
+    cols[1].textContent = purchase_details[index].name;
+    cols[2].textContent = purchase_details[index].qty;
+    cols[3].textContent = purchase_details[index].price_unit;
+    cols[4].textContent = purchase_details[index].price_total;
 
     $('#purchase-detail-form-modal').modal('hide');
   }
